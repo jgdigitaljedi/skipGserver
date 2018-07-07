@@ -8,7 +8,7 @@ var cors = require('cors');
 var passport = require('passport');
 
 // [SH] Bring in the data model
-require('./api/models/db');
+require('./api/models/db.model');
 // [SH] Bring in the Passport config after model is defined
 require('./api/config/passport');
 

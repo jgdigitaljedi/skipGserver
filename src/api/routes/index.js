@@ -6,27 +6,18 @@ var auth = jwt({
 	userProperty: 'payload'
 });
 
-var ctrlProfile = require('../controllers/profile');
-var ctrlAuth = require('../controllers/authentication');
-var ctrlPhotos = require('../controllers/photos');
+var ctrlProfile = require('../controllers/profile.controller');
 
 // profile
 router.get('/profile', auth, ctrlProfile.profileRead);
 
 // authentication
-router.post('/register', ctrlAuth.register);
-router.post('/login', ctrlAuth.login);
+router.use('/user', require('./users.routes'));
 
 // photos
-router.get('/photos/list', ctrlPhotos.getList);
-router.post('/photos/upload', ctrlPhotos.uploadPhotos);
-router.patch('/photos/delete', ctrlPhotos.deletePhoto);
+router.use('/photos', require('./photos.routes'));
 
 // admin
-// get users - get list of users
-// get user - get specific user
-// delete user - remove user
-// patch user - suspend account for a while and/or modify user
-//
+router.use('/admin', auth, require('./admin.routes'));
 
 module.exports = router;

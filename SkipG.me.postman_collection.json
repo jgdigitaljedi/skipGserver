@@ -24,7 +24,7 @@
 							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"name\": \"Tester McTesterson\",\n\t\"password\": \"test\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/register",
+							"raw": "http://localhost:3000/api/user/register",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -32,6 +32,7 @@
 							"port": "3000",
 							"path": [
 								"api",
+								"user",
 								"register"
 							]
 						}
@@ -53,7 +54,7 @@
 							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"test\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/login",
+							"raw": "http://localhost:3000/api/user/login",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -61,7 +62,80 @@
 							"port": "3000",
 							"path": [
 								"api",
+								"user",
 								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "photos",
+			"description": "",
+			"item": [
+				{
+					"name": "getPhotosList",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/photos/list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"photos",
+								"list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deletePhoto",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/photos/delete",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"photos",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "uploadPhoto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"url": {
+							"raw": "http://localhost:3000/api/photos/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"photos",
+								"upload"
 							]
 						}
 					},
