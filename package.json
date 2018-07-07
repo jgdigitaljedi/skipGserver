@@ -1,0 +1,38 @@
+{
+	"name": "skipgserver",
+	"version": "0.0.1",
+	"description": "backend for skipg.me",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "node src/server.js",
+		"dev": "nodemon --watch src src/server.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jgdigitaljedi/skipGserver.git"
+	},
+	"keywords": [ "node", "express", "mongo", "jwt", "passport" ],
+	"author": "Joey Gauthier",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/jgdigitaljedi/skipGserver/issues"
+	},
+	"homepage": "https://github.com/jgdigitaljedi/skipGserver#readme",
+	"dependencies": {
+		"body-parser": "^1.18.3",
+		"cookie-parser": "^1.4.3",
+		"cors": "^2.8.4",
+		"debug": "^3.1.0",
+		"express": "^4.16.3",
+		"express-jwt": "^5.3.1",
+		"jsonwebtoken": "^8.3.0",
+		"mongoose": "^5.2.1",
+		"morgan": "^1.9.0",
+		"passport": "^0.4.0",
+		"passport-local": "^1.0.0"
+	},
+	"devDependencies": {
+		"nodemon": "^1.17.5"
+	}
+}
