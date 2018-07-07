@@ -3,7 +3,7 @@
  */
 
 var app = require('./app');
-var debug = require('debug')('MEAN-stack-authentication:server');
+var debug = require('debug')('skipg:server');
 var http = require('http');
 
 /**
