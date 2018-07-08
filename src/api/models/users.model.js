@@ -12,6 +12,10 @@ var userSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	admin: {
+		type: Boolean,
+		retuired: true
+	},
 	hash: String,
 	salt: String
 });

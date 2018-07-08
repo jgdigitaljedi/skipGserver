@@ -7,6 +7,7 @@ module.exports.register = function(req, res) {
 
 	user.name = req.body.name;
 	user.email = req.body.email;
+	user.admin = false;
 
 	user.setPassword(req.body.password);
 
@@ -15,7 +16,8 @@ module.exports.register = function(req, res) {
 		token = user.generateJwt();
 		res.status(200);
 		res.json({
-			token: token
+			token: token,
+			admin: false
 		});
 	});
 };
@@ -35,11 +37,30 @@ module.exports.login = function(req, res) {
 			token = user.generateJwt();
 			res.status(200);
 			res.json({
-				token: token
+				token: token,
+				admin: user.admin
 			});
 		} else {
 			// If user is not found
 			res.status(401).json(info);
 		}
 	})(req, res);
+};
+
+module.exports.devUser = function(req, res) {
+	var env = process.env.NODE_ENV || 'development';
+	if (env === 'production') {
+		res.status(401).json({ message: 'This is only available in development for testing purposes.' });
+	} else {
+		var user = new User();
+
+		user.name = req.body.name;
+		user.email = req.body.email;
+		user.admin = false;
+
+		user.setPassword(req.body.password);
+		var token;
+		token = user.generateJwt();
+		res.status(200).json({ token: token, user: user });
+	}
 };

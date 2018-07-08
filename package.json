@@ -12,7 +12,13 @@
 		"type": "git",
 		"url": "git+https://github.com/jgdigitaljedi/skipGserver.git"
 	},
-	"keywords": [ "node", "express", "mongo", "jwt", "passport" ],
+	"keywords": [
+		"node",
+		"express",
+		"mongo",
+		"jwt",
+		"passport"
+	],
 	"author": "Joey Gauthier",
 	"license": "ISC",
 	"bugs": {
@@ -26,6 +32,7 @@
 		"debug": "^3.1.0",
 		"express": "^4.16.3",
 		"express-jwt": "^5.3.1",
+		"helmet": "^3.12.1",
 		"jsonwebtoken": "^8.3.0",
 		"mongoose": "^5.2.1",
 		"morgan": "^1.9.0",

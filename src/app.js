@@ -4,6 +4,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var helmet = require('helmet');
 // [SH] Require Passport
 var passport = require('passport');
 
@@ -24,6 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
+app.use(helmet());
 
 // [SH] Initialise Passport before using the route middleware
 app.use(passport.initialize());
