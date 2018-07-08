@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 var gracefulShutdown;
-var dbURI = 'mongodb://localhost/skipg';
+var dbURI = 'mongodb://localhost:27017/skipg';
 if (process.env.NODE_ENV === 'production') {
 	dbURI = process.env.SKIPG_URI;
 }
 
-mongoose.connect(dbURI);
+mongoose.connect(dbURI, { useNewUrlParser: true });
 
 // CONNECTION EVENTS
 mongoose.connection.on('connected', function() {
