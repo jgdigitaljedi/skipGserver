@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var logger = require('../config/winston');
 
 // patch user - suspend account for a while and/or modify user
 
@@ -9,6 +10,7 @@ module.exports.listUsers = function(req, res) {
 	} else {
 		User.find({}, function(err, users) {
 			if (err) {
+				logger.logThis(err, req);
 				res.status(500).send('ERROR: Something went wrong with fetching list of users.');
 			} else {
 				var usersCleaned = users.map(function(item) {
@@ -28,6 +30,7 @@ module.exports.deleteUser = function(req, res) {
 	if (req.payload.admin) {
 		User.findByIdAndRemove({ _id: req.body._id }, function(err, result) {
 			if (err) {
+				logger.logThis(err, req);
 				res.status(500).send('ERROR: Something went wrong with deleting the user.');
 			} else {
 				res.status(200).json(result);

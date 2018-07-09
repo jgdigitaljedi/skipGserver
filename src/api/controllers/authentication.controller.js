@@ -1,6 +1,7 @@
 var passport = require('passport');
 var mongoose = require('mongoose');
 var User = mongoose.model('User');
+var logger = require('../config/winston');
 
 module.exports.register = function(req, res) {
 	var user = new User();
@@ -28,6 +29,7 @@ module.exports.login = function(req, res) {
 
 		// If Passport throws/catches an error
 		if (err) {
+			logger.logThis(err, req);
 			res.status(404).json(err);
 			return;
 		}

@@ -1,11 +1,11 @@
-var appRoot = require('app-root-path');
+// var appRoot = require('app-root-path');
 var winston = require('winston');
 
 // define the custom settings for each transport (file, console)
 var options = {
 	file: {
 		level: 'info',
-		filename: `${appRoot}/logs/app.log`,
+		filename: '../logs/app.log',
 		handleExceptions: true,
 		json: true,
 		maxsize: 5242880, // 5MB
@@ -36,4 +36,22 @@ logger.stream = {
 	}
 };
 
+logger.logThis = function(err, req) {
+	logger.error(
+		err.status || 500 + ' -  ' + err.message + ' - ' + req.originalUrl + ' - ' + req.method + ' - ' + req.ip
+	);
+};
+
 module.exports = logger;
+
+/*
+logger.log('silly', "127.0.0.1 - there's no place like home");
+logger.log('debug', "127.0.0.1 - there's no place like home");
+logger.log('verbose', "127.0.0.1 - there's no place like home");
+logger.log('info', "127.0.0.1 - there's no place like home");
+logger.log('warn', "127.0.0.1 - there's no place like home");
+logger.log('error', "127.0.0.1 - there's no place like home");
+logger.info("127.0.0.1 - there's no place like home");
+logger.warn("127.0.0.1 - there's no place like home");
+logger.error("127.0.0.1 - there's no place like home");
+*/

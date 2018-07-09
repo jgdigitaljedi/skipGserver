@@ -6,17 +6,14 @@ var auth = jwt({
 	userProperty: 'payload'
 });
 
-// var ctrlProfile = require('../controllers/profile.controller');
-
 // profile
-// router.get('/profile', auth, ctrlProfile.profileRead);
 router.use('/profile', auth, require('./profile.routes'));
 
 // authentication
 router.use('/user', require('./users.routes'));
 
 // photos
-router.use('/photos', require('./photos.routes'));
+router.use('/photos', auth, require('./photos.routes'));
 
 // admin
 router.use('/admin', auth, require('./admin.routes'));
