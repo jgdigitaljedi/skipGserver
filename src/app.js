@@ -28,8 +28,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(cors());
 app.use(helmet());
-app.use(express.static(path.join(__dirname + '/photos')));
-app.use(express.static(path.join(__dirname + '/thumbs')));
+app.use(express.static(path.join(__dirname + '/public')));
 
 // [SH] Initialise Passport before using the route middleware
 app.use(passport.initialize());

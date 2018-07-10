@@ -1,1 +1,7 @@
+# lib
 node_modules/
+
+# annoying Apple junk
+.DS_Store
+src/.DS_Store
+src/api/.DS_Store
