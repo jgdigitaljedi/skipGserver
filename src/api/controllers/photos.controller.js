@@ -1,17 +1,18 @@
 var logger = require('../config/winston');
 var mongoose = require('mongoose');
 var Photo = mongoose.model('Photo');
-var moment = require('moment');
-var common = require('../../../common');
+var User = mongoose.model('User');
 
 module.exports.getList = function (req, res) {
-	Photo.find({}, function (err, photos) {
-		if (err) {
-			logger.logThis(err, req);
-			res.status(500).send('ERROR: Error fetching photos list!');
-		}
-		res.status(200).json(photos);
-	});
+	Photo.find({})
+		.populate('uploadedBy', '-_id -salt -hash -admin')
+		.exec(function (err, photos) {
+			if (err) {
+				logger.logThis(err, req);
+				res.status(500).send('ERROR: Error fetching photos list!');
+			}
+			res.status(200).json(photos);
+		});;
 };
 
 module.exports.downloadPhoto = function (req, res) {
@@ -75,6 +76,7 @@ module.exports.getPhotoByUploader = function (req, res) {
 };
 
 module.exports.uploadPhotos = function (req, res) {
+	// no comments on upload just to make this simpler
 	var file = req.file;
 	var user = req.user;
 	if (!file) {
@@ -83,14 +85,17 @@ module.exports.uploadPhotos = function (req, res) {
 	} else {
 		// @TODO: need to do 300px width conversion and save as thumb as well
 		var photo = new Photo();
-		photo.uploadedBy = payload.name;
+		// photo.getUploader(req.payload).then(function (user) {
+		// 	photo.uploadedBy = user;
+		// });
+		photo.uploadedBy = req.payload._id;
+		photo.timestamp();
 		photo.fileName = file.filename;
-		photo.uploadDate = moment().format(common.dateFormat);
 		photo.tags = req.body.tags ? req.body.tags : [];
-		photo.comments = req.body.comment ? [req.body.comment] : [];
+		photo.comments = [];
 		console.log('photo', photo);
 		photo.save(function (err) {
-			res.status(200).json(file);
+			res.status(200).json(photo);
 		});
 	}
 	// make tags and uploader lower case before save so they are easy to filter by later

@@ -186,7 +186,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQ0YTQyYjRjNWEyODc0ZGE3Y2RiNzYiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE4Mjk5MzEsImlhdCI6MTUzMTIyNTEzMX0.Wfy4Xgf3l20VSkToSiHZMdJE2HoIKWBvl_JSIULiIxE",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQ1ZmRmN2MwNTY5NTRlNGMyNzg5NzkiLCJlbWFpbCI6ImFkbWluaXN0cmF0b3JAYWRtaW4uY29tIiwibmFtZSI6ImFkbWluIiwiYWRtaW4iOnRydWUsImV4cCI6MTUzMTkxODQ5MCwiaWF0IjoxNTMxMzEzNjkwfQ.Co3KRQr4w1iFYahkjZ6-jjtBRz0jEgc00OnBsrOejb4",
 									"type": "string"
 								}
 							]
@@ -204,19 +204,18 @@
 							"formdata": [
 								{
 									"key": "photo",
-									"value": "",
 									"description": "",
 									"type": "file"
 								},
 								{
-									"key": "tags",
-									"value": "['test', 'test again']",
+									"key": "tags[0]",
+									"value": "test",
 									"description": "",
 									"type": "text"
 								},
 								{
-									"key": "comment",
-									"value": "'Testing the comments'",
+									"key": "tags[1]",
+									"value": "more testing",
 									"description": "",
 									"type": "text"
 								}
