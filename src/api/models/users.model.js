@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
-var crypto = require('crypto');
-var jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 
-var userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
 	email: {
 		type: String,
 		unique: true,

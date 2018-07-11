@@ -1,7 +1,7 @@
-var express = require('express');
-var router = express.Router();
-var ctrlPhotos = require('../controllers/photos.controller');
-var uploadMw = require('../config/upload');
+const express = require('express');
+const router = express.Router();
+const ctrlPhotos = require('../controllers/photos.controller');
+const uploadMw = require('../config/upload');
 
 router.get('/', ctrlPhotos.getList);
 router.get('/info/:id', ctrlPhotos.getPhotoInfo);

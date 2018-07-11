@@ -1,6 +1,6 @@
-var express = require('express');
-var router = express.Router();
-var ctrlAdmin = require('../controllers/admin.controller');
+const express = require('express');
+const router = express.Router();
+const ctrlAdmin = require('../controllers/admin.controller');
 
 router.get('/listusers', ctrlAdmin.listUsers);
 router.delete('/deleteuser', ctrlAdmin.deleteUser);

@@ -1,13 +1,13 @@
-var mongoose = require('mongoose');
-var moment = require('moment');
-var common = require('../../../common');
-// var User = mongoose.model('User');
+const mongoose = require('mongoose');
+const moment = require('moment');
+const common = require('../../../common');
+// const User = mongoose.model('User');
 
 // function findUser(id) {
 // 	return User.findById(id).exec();
 // }
 
-var photoSchema = new mongoose.Schema({
+const photoSchema = new mongoose.Schema({
 	uploadDate: {
 		type: String,
 		required: true
@@ -21,15 +21,15 @@ var photoSchema = new mongoose.Schema({
 		ref: 'User',
 		required: true
 	},
-	tags: [{ type: String }],
-	comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
+	tags: [ { type: String } ],
+	comments: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Comment' } ]
 });
 
-photoSchema.methods.getUploader = function (payload) {
+photoSchema.methods.getUploader = function(payload) {
 	this.uploadedBy = payload._id;
 };
 
-photoSchema.methods.timestamp = function (payload) {
+photoSchema.methods.timestamp = function() {
 	this.uploadDate = moment().format(common.dateFormat);
 };
 

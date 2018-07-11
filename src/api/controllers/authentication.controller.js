@@ -1,10 +1,10 @@
-var passport = require('passport');
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
-var logger = require('../config/winston');
+const passport = require('passport');
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
+const logger = require('../config/winston');
 
-module.exports.register = function(req, res) {
-	var user = new User();
+module.exports.register = (req, res) => {
+	const user = new User();
 
 	user.name = req.body.name;
 	user.email = req.body.email;
@@ -13,7 +13,7 @@ module.exports.register = function(req, res) {
 	user.setPassword(req.body.password);
 
 	user.save(function(err) {
-		var token;
+		let token;
 		token = user.generateJwt();
 		res.status(200);
 		res.json({
@@ -23,9 +23,9 @@ module.exports.register = function(req, res) {
 	});
 };
 
-module.exports.login = function(req, res) {
-	passport.authenticate('local', function(err, user, info) {
-		var token;
+module.exports.login = (req, res) => {
+	passport.authenticate('local', (err, user, info) => {
+		let token;
 
 		// If Passport throws/catches an error
 		if (err) {
@@ -49,19 +49,19 @@ module.exports.login = function(req, res) {
 	})(req, res);
 };
 
-module.exports.devUser = function(req, res) {
-	var env = process.env.NODE_ENV || 'development';
+module.exports.devUser = (req, res) => {
+	const env = process.env.NODE_ENV || 'development';
 	if (env === 'production') {
 		res.status(401).json({ message: 'This is only available in development for testing purposes.' });
 	} else {
-		var user = new User();
+		const user = new User();
 
 		user.name = req.body.name;
 		user.email = req.body.email;
 		user.admin = false;
 
 		user.setPassword(req.body.password);
-		var token;
+		let token;
 		token = user.generateJwt();
 		res.status(200).json({ token: token, user: user });
 	}

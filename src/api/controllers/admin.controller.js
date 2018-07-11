@@ -1,19 +1,19 @@
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
-var logger = require('../config/winston');
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
+const logger = require('../config/winston');
 
 // patch user - suspend account for a while and/or modify user
 
-module.exports.listUsers = function (req, res) {
+module.exports.listUsers = (req, res) => {
 	if (!req.payload.admin) {
 		res.status(403).send('UNAUTHORIZED: Access denied! You must be an admin to get all users!');
 	} else {
-		User.find({}, function (err, users) {
+		User.find({}, (err, users) => {
 			if (err) {
 				logger.logThis(err, req);
 				res.status(500).send('ERROR: Something went wrong with fetching list of users.');
 			} else {
-				var usersCleaned = users.map(function (item) {
+				const usersCleaned = users.map((item) => {
 					return {
 						_id: item._id,
 						name: item.name,
@@ -27,9 +27,9 @@ module.exports.listUsers = function (req, res) {
 	}
 };
 
-module.exports.deleteUser = function (req, res) {
+module.exports.deleteUser = (req, res) => {
 	if (req.payload.admin) {
-		User.findByIdAndRemove({ _id: req.body._id }, function (err, result) {
+		User.findByIdAndRemove({ _id: req.body._id }, (err, result) => {
 			if (err) {
 				logger.logThis(err, req);
 				res.status(500).send('ERROR: Something went wrong with deleting the user.');

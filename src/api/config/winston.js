@@ -1,8 +1,8 @@
 // var appRoot = require('app-root-path');
-var winston = require('winston');
+const winston = require('winston');
 
 // define the custom settings for each transport (file, console)
-var options = {
+const options = {
 	file: {
 		level: 'info',
 		filename: '../logs/app.log',
@@ -21,7 +21,7 @@ var options = {
 };
 
 // instantiate a new Winston Logger with the settings defined above
-var logger = winston.createLogger({
+const logger = winston.createLogger({
 	level: 'info',
 	format: winston.format.json(),
 	transports: [ new winston.transports.File(options.file), new winston.transports.Console(options.console) ],
@@ -30,13 +30,13 @@ var logger = winston.createLogger({
 
 // create a stream object with a 'write' function that will be used by `morgan`
 logger.stream = {
-	write: function(message, encoding) {
+	write: (message, encoding) => {
 		// use the 'info' log level so the output will be picked up by both transports (file and console)
 		logger.info(message);
 	}
 };
 
-logger.logThis = function(err, req) {
+logger.logThis = (err, req) => {
 	logger.error(
 		err.status || 500 + ' -  ' + err.message + ' - ' + req.originalUrl + ' - ' + req.method + ' - ' + req.ip
 	);

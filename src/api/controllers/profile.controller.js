@@ -1,6 +1,6 @@
-var mongoose = require('mongoose');
-var User = mongoose.model('User');
-var logger = require('../config/winston');
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
+const logger = require('../config/winston');
 
 function unarthorizedResponse(res) {
 	res.status(401).json({
@@ -8,11 +8,11 @@ function unarthorizedResponse(res) {
 	});
 }
 
-module.exports.profileRead = function(req, res) {
+module.exports.profileRead = (req, res) => {
 	if (!req.payload._id) {
 		unarthorizedResponse(res);
 	} else {
-		User.findById(req.payload._id).exec(function(err, user) {
+		User.findById(req.payload._id).exec((err, user) => {
 			if (err) {
 				logger.logThis(err, req);
 				res.status(500).send('ERROR: Error fetching user profile.');
@@ -23,7 +23,7 @@ module.exports.profileRead = function(req, res) {
 	}
 };
 
-module.exports.profileUpdate = function(req, res) {
+module.exports.profileUpdate = (req, res) => {
 	// res.status(200).json({ request: req.body, payload: req.payload });
 	if (!req.payload._id) {
 		unarthorizedResponse(res);
@@ -32,7 +32,7 @@ module.exports.profileUpdate = function(req, res) {
 			{ _id: req.payload._id },
 			{ $set: req.body },
 			{ runValidators: true, upsert: true },
-			function(err, result) {
+			(err, result) => {
 				if (err) {
 					logger.logThis(err, req);
 					res.status(500).send('ERROR: Error updating user data.');
