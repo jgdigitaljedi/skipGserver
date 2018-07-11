@@ -1,7 +1,7 @@
 const logger = require('../config/winston');
 const mongoose = require('mongoose');
 const Photo = mongoose.model('Photo');
-const User = mongoose.model('User');
+const resizer = require('../config/thumbs');
 
 module.exports.getList = (req, res) => {
 	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
@@ -81,6 +81,7 @@ module.exports.uploadPhotos = (req, res) => {
 		res.status(500).send('ERROR: Photo file not received!');
 	} else {
 		// @TODO: need to do 300px width conversion and save as thumb as well
+		resizer.createThumb(req.file);
 		let photo = new Photo();
 		photo.uploadedBy = req.payload._id;
 		photo.timestamp();

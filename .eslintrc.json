@@ -1,7 +1,7 @@
 {
 	"env": {
-		"browser": true,
-		"commonjs": true,
+		"browser": false,
+		"mongo": true,
 		"es6": true,
 		"node": true
 	},
@@ -12,6 +12,8 @@
 		"no-undef": "warn",
 		"no-unreachable": "warn",
 		"no-unused-vars": "warn",
-		"valid-typeof": "warn"
+		"valid-typeof": "warn",
+		"eqeqeq": "warn",
+		"semi": [ "warn, always" ]
 	}
 }
