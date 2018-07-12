@@ -3,7 +3,7 @@
 ```
 mongo
 use skipg
-db.users.insert({'email':'email@domain.com', 'name': 'your name', 'admin': true, 'salt': 'yourGeneratedSalt', 'hash': 'yourGeneratedHash'});
+db.users.insert({email:'admin@admin.com', name: 'admin', admin: true, salt: 'yourGeneratedSalt', 'hash': 'yourGeneratedHash'})
 ```
 
 ## ** Drop DB **
@@ -17,3 +17,4 @@ db.dropDatabase()
 ```
 sudo apt-get install libimage-exiftool-perl
 ```
+

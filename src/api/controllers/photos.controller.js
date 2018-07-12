@@ -2,6 +2,8 @@ const logger = require('../config/winston');
 const mongoose = require('mongoose');
 const Photo = mongoose.model('Photo');
 const photoFix = require('../config/photos');
+const fs = require('fs');
+const common = require('../../../common');
 
 module.exports.getList = (req, res) => {
 	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
@@ -88,7 +90,7 @@ module.exports.getPhotoByUploaderId = (req, res) => {
 };
 
 module.exports.getPhotoByUploaderName = (req, res) => {
-	Photo.find({}, (err, photos) => {
+	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
 		if (err) {
 			logger.logThis(err, req);
 			res.status(500).send('ERROR: Error fetching photos from DB.');
@@ -97,8 +99,8 @@ module.exports.getPhotoByUploaderName = (req, res) => {
 				try {
 					const filterText = req.body.uploader.toLowerCase();
 					const filtered = photos.filter((p) => {
-						if (p.uploader && p.uploader.name) {
-							return p.uploader.name.indexOf(filterText) >= 0;
+						if (p.uploadedBy && p.uploadedBy.name) {
+							return p.uploadedBy.name.indexOf(filterText) >= 0;
 						}
 					});
 					res.status(200).json(filtered);
@@ -150,8 +152,38 @@ module.exports.uploadPhotos = (req, res) => {
 
 module.exports.deletePhoto = (req, res) => {
 	// must be admin to hit this
-	// @TODO: write this
-	res.status(200).send('Delete Photo Success');
+	if (req.payload && req.payload.admin) {
+		Photo.findById(req.body._id, (err, photo) => {
+			if (err) {
+				logger.logThis(err, req);
+				res.status(500).send('ERROR: Problem fetching photo for deletion.');
+			} else {
+				const filePath = `${common.rootPath}/public/photos/${photo.fileName}`;
+				// delete db entry
+				photo.remove((err) => {
+					if (err) {
+						logger.logThis(err, req);
+						res.status(500).send('ERROR: Problem deleting DB entry for photo.');
+					} else {
+						try {
+							// delete file
+							fs.unlink(filePath);
+							// delete thumb
+							const nameSplit = photo.fileName.split('.');
+							const thumbPath = `${common.rootPath}/public/thumbs/${nameSplit[0]}-thumb.${nameSplit[1]}`;
+							fs.unlink(thumbPath);
+							res.status(200).json(photo);
+						} catch (e) {
+							logger.logThis(e, req);
+							res.status(500).send('ERROR: Problem deleting photo and/or thumb from file system');
+						}
+					}
+				});
+			}
+		});
+	} else {
+		res.status(403).send('UNAUTHORIZED: You must be an admin to delete a photo!');
+	}
 };
 
 module.exports.editTags = (req, res) => {
