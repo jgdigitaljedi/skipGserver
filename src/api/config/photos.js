@@ -12,3 +12,5 @@ module.exports.createThumb = function(file) {
 			}
 		});
 };
+
+module.exports.removeExif = function(file) {};
