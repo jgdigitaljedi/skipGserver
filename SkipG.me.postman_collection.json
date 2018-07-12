@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "57a39565-b1af-4dd1-975c-aa041ba6311e",
+		"_postman_id": "5491dc1d-6b65-4edd-b3e0-bcef2c986e9d",
 		"name": "SkipG.me",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -186,7 +186,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQ1ZmRmN2MwNTY5NTRlNGMyNzg5NzkiLCJlbWFpbCI6ImFkbWluaXN0cmF0b3JAYWRtaW4uY29tIiwibmFtZSI6ImFkbWluIiwiYWRtaW4iOnRydWUsImV4cCI6MTUzMTkxODQ5MCwiaWF0IjoxNTMxMzEzNjkwfQ.Co3KRQr4w1iFYahkjZ6-jjtBRz0jEgc00OnBsrOejb4",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyOGY3ZjczOWUxMTM4ZTZiNWE4Y2EiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE5NTMzNTEsImlhdCI6MTUzMTM0ODU1MX0.XeGi-SXBr_cAYQsKW1taRl9FzTMIl4SzVJZXTXn54so",
 									"type": "string"
 								}
 							]
@@ -195,8 +195,7 @@
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "multipart/form-data",
-								"disabled": true
+								"value": "multipart/form-data"
 							}
 						],
 						"body": {
@@ -204,19 +203,16 @@
 							"formdata": [
 								{
 									"key": "photo",
-									"description": "",
 									"type": "file"
 								},
 								{
 									"key": "tags[0]",
 									"value": "test",
-									"description": "",
 									"type": "text"
 								},
 								{
 									"key": "tags[1]",
 									"value": "more testing",
-									"description": "",
 									"type": "text"
 								}
 							]
@@ -364,7 +360,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"tag\": \"mere mere\"\n}"
+							"raw": "{\n\t\"tag\": \"test\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/photos/tag",
@@ -383,7 +379,7 @@
 					"response": []
 				},
 				{
-					"name": "getPhotosByUploader",
+					"name": "getPhotosByUploaderId",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -404,10 +400,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"_id\": \"11\"\n}"
+							"raw": "{\n\t\"uploader\": \"\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/photos/uploader",
+							"raw": "http://localhost:3000/api/photos/uploader/id",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -416,7 +412,8 @@
 							"path": [
 								"api",
 								"photos",
-								"uploader"
+								"uploader",
+								"id"
 							]
 						}
 					},
@@ -499,6 +496,47 @@
 								"photos",
 								"comment",
 								"11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPhotosByUploaderName",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyOGY3ZjczOWUxMTM4ZTZiNWE4Y2EiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE2OTM1ODcsImlhdCI6MTUzMTA4ODc4N30.h_CA1NEgxC17S3M_nzY71LUBYdYFFY7XHCUDWDxfqTg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"uploader\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/photos/uploader/name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"photos",
+								"uploader",
+								"name"
 							]
 						}
 					},
