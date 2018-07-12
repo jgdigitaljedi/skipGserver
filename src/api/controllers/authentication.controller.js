@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const logger = require('../config/winston');
 
-module.exports.register = (req, res) => {
+module.exports.register = function(req, res) {
 	const user = new User();
 
 	user.name = req.body.name;
@@ -23,7 +23,7 @@ module.exports.register = (req, res) => {
 	});
 };
 
-module.exports.login = (req, res) => {
+module.exports.login = function(req, res) {
 	passport.authenticate('local', (err, user, info) => {
 		let token;
 
@@ -36,12 +36,17 @@ module.exports.login = (req, res) => {
 
 		// If a user is found
 		if (user) {
-			token = user.generateJwt();
-			res.status(200);
-			res.json({
-				token: token,
-				admin: user.admin
-			});
+			try {
+				token = user.generateJwt();
+				res.status(200);
+				res.json({
+					token: token,
+					admin: user.admin
+				});
+			} catch (e) {
+				logger.logThis(e, req);
+				res.status(500).send('ERROR: Problem logging in.');
+			}
 		} else {
 			// If user is not found
 			res.status(401).json(info);
@@ -49,7 +54,7 @@ module.exports.login = (req, res) => {
 	})(req, res);
 };
 
-module.exports.devUser = (req, res) => {
+module.exports.devUser = function(req, res) {
 	const env = process.env.NODE_ENV || 'development';
 	if (env === 'production') {
 		res.status(401).json({ message: 'This is only available in development for testing purposes.' });

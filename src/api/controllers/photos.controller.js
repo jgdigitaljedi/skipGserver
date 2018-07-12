@@ -14,10 +14,12 @@ module.exports.getList = (req, res) => {
 };
 
 module.exports.downloadPhoto = (req, res) => {
+	// @TODO: write this
 	res.status(200).send('Download Photo Success');
 };
 
 module.exports.downloadAll = (req, res) => {
+	// @TODO: write this
 	res.status(200).send('Download ALL Photos Success');
 };
 
@@ -44,64 +46,116 @@ module.exports.getPhotoByTag = (req, res) => {
 			logger.logThis(err, req);
 			res.status(500).send('ERROR: Error fetching photos from DB.');
 		} else {
-			const filter = req.tag.toLowerCase();
-			const filtered = photos.filter((p) => {
-				if (p.tags && p.tags.length) {
-					return p.tags.indexOf(filter) >= 0;
+			if (req.body.tag) {
+				try {
+					const filter = req.body.tag.toLowerCase();
+					const filtered = photos.filter((p) => {
+						if (p.tags && p.tags.length) {
+							return p.tags.indexOf(filter) >= 0;
+						}
+					});
+					res.status(200).json(filtered);
+				} catch (e) {
+					logger.logThis(e, req);
+					res.status(500).send('ERROR: Problem parsing photos data.');
 				}
-			});
-			res.status(200).json(filtered);
+			} else {
+				res.status(200).json([]);
+			}
 		}
 	});
 };
 
-module.exports.getPhotoByUploader = (req, res) => {
+module.exports.getPhotoByUploaderId = (req, res) => {
 	Photo.find({}, (err, photos) => {
 		if (err) {
 			logger.logThis(err, req);
 			res.status(500).send('ERROR: Error fetching photos from DB.');
 		} else {
-			const filter = req.uploader.toLowerCase();
-			const filtered = photos.filter((p) => {
-				if (p.uploader && p.uploader.length) {
-					return p.uploader.indexOf(filter) >= 0;
+			if (req.body.uploader) {
+				try {
+					const filtered = photos.filter((p) => p.uploadedBy === req.body.uploader);
+					res.status(200).json(filtered);
+				} catch (e) {
+					logger.logThis(e, req);
+					res.status(500).send('ERROR: Problem parsing photos by tags.');
 				}
-			});
-			res.status(200).json(filtered);
+			} else {
+				res.status(200).json([]);
+			}
+		}
+	});
+};
+
+module.exports.getPhotoByUploaderName = (req, res) => {
+	Photo.find({}, (err, photos) => {
+		if (err) {
+			logger.logThis(err, req);
+			res.status(500).send('ERROR: Error fetching photos from DB.');
+		} else {
+			if (req.body.uploader) {
+				try {
+					const filterText = req.body.uploader.toLowerCase();
+					const filtered = photos.filter((p) => {
+						if (p.uploader && p.uploader.name) {
+							return p.uploader.name.indexOf(filterText) >= 0;
+						}
+					});
+					res.status(200).json(filtered);
+				} catch (e) {
+					logger.logThis(e, req);
+					res.status(500).send('ERROR: Problem parsing photos by uploader name');
+				}
+			} else {
+				res.status(200).json([]);
+			}
 		}
 	});
 };
 
 module.exports.uploadPhotos = (req, res) => {
+	// @TODO: consider making thumb creation and exif stripping async and mandatory for success
 	// no comments on upload just to make this simpler
-	console.log('here');
 	const file = req.file;
 	if (!file) {
 		logger.logThis('ERROR: Photo file not received!', req);
 		res.status(500).send('ERROR: Photo file not received!');
 	} else {
-		// @TODO: need to do 300px width conversion and save as thumb as well
-		// resizer.removeExif(req.file);
-		photoFix.createThumb(req.file);
-		let photo = new Photo();
-		photo.uploadedBy = req.payload._id;
-		photo.timestamp();
-		photo.fileName = file.filename;
-		photo.tags = req.body.tags ? req.body.tags : [];
-		photo.comments = [];
-		photo.save((err) => {
-			res.status(200).json(photo);
-		});
+		try {
+			// remove geo tag data
+			photoFix.removeExif(req.file);
+			// create thumb for view photos page
+			photoFix.createThumb(req.file);
+			// create and save photo info to db
+			let photo = new Photo();
+			photo.uploadedBy = req.payload._id;
+			photo.timestamp();
+			photo.fileName = file.filename;
+			if (req.body.tags) {
+				// convert tags to lwoer case for easier use later
+				photo.tags = req.body.tags.map((tag) => tag.toLowerCase());
+			} else {
+				photo.tags = [];
+			}
+			photo.comments = [];
+			photo.save((err) => {
+				res.status(200).json(photo);
+			});
+		} catch (e) {
+			logger.logThis(e, req);
+			res.status(500).send('ERROR: An error occurred with the photo upload process.');
+		}
 	}
-	// make tags and uploader lower case before save so they are easy to filter by later
 };
 
 module.exports.deletePhoto = (req, res) => {
 	// must be admin to hit this
+	// @TODO: write this
 	res.status(200).send('Delete Photo Success');
 };
 
 module.exports.editTags = (req, res) => {
+	// @TODO: write this
 	if (req.params.hasOwnProperty('id') && req.params.id) {
 		Photo.findById(req.params.id, (err, photo) => {
 			// assign new tags to photo and save, then send response
@@ -116,6 +170,7 @@ module.exports.editTags = (req, res) => {
 };
 
 module.exports.editComments = (req, res) => {
+	// @TODO: write this
 	if (req.params.hasOwnProperty('id') && req.params.id) {
 		Photo.findById(req.params.id, (err, photo) => {
 			// assign new comments to photo and save, then send response

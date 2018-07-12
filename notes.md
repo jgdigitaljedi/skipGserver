@@ -12,3 +12,8 @@ mongo
 use skipg
 db.dropDatabase()
 ```
+
+## ** Install exiftool on server **
+```
+sudo apt-get install libimage-exiftool-perl
+```

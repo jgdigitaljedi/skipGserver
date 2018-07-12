@@ -4,7 +4,7 @@ const logger = require('../config/winston');
 
 // patch user - suspend account for a while and/or modify user
 
-module.exports.listUsers = (req, res) => {
+module.exports.listUsers = function(req, res) {
 	if (!req.payload.admin) {
 		res.status(403).send('UNAUTHORIZED: Access denied! You must be an admin to get all users!');
 	} else {
@@ -13,21 +13,27 @@ module.exports.listUsers = (req, res) => {
 				logger.logThis(err, req);
 				res.status(500).send('ERROR: Something went wrong with fetching list of users.');
 			} else {
-				const usersCleaned = users.map((item) => {
-					return {
-						_id: item._id,
-						name: item.name,
-						email: item.email,
-						admin: item.admin
-					};
-				});
-				res.status(200).json(usersCleaned);
+				try {
+					const usersCleaned = users.map((item) => {
+						return {
+							_id: item._id,
+							name: item.name,
+							email: item.email,
+							admin: item.admin
+						};
+					});
+					res.status(200).json(usersCleaned);
+				} catch (e) {
+					logger.logThis(e, req);
+					res.status(500).send('ERROR: Something went wrong with getting user and cleaning results.');
+				}
 			}
 		});
 	}
 };
 
-module.exports.deleteUser = (req, res) => {
+module.exports.deleteUser = function(req, res) {
+	// @TODO: needs to be written
 	if (req.payload.admin) {
 		User.findByIdAndRemove({ _id: req.body._id }, (err, result) => {
 			if (err) {

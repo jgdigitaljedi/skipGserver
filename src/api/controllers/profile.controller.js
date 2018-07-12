@@ -8,7 +8,7 @@ function unarthorizedResponse(res) {
 	});
 }
 
-module.exports.profileRead = (req, res) => {
+module.exports.profileRead = function(req, res) {
 	if (!req.payload._id) {
 		unarthorizedResponse(res);
 	} else {
@@ -23,7 +23,7 @@ module.exports.profileRead = (req, res) => {
 	}
 };
 
-module.exports.profileUpdate = (req, res) => {
+module.exports.profileUpdate = function(req, res) {
 	// res.status(200).json({ request: req.body, payload: req.payload });
 	if (!req.payload._id) {
 		unarthorizedResponse(res);

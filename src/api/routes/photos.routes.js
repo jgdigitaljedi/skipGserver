@@ -11,7 +11,8 @@ router.post('/all', ctrlPhotos.downloadAll);
 router.delete('/', ctrlPhotos.deletePhoto);
 
 router.post('/tag', ctrlPhotos.getPhotoByTag);
-router.post('/uploader', ctrlPhotos.getPhotoByUploader);
+router.post('/uploader/id', ctrlPhotos.getPhotoByUploaderId);
+router.post('/uploader/name', ctrlPhotos.getPhotoByUploaderName);
 router.patch('/tag/:id', ctrlPhotos.editTags);
 router.patch('/comment/:id', ctrlPhotos.editComments);
 

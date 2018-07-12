@@ -25,10 +25,6 @@ const photoSchema = new mongoose.Schema({
 	comments: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Comment' } ]
 });
 
-photoSchema.methods.getUploader = function(payload) {
-	this.uploadedBy = payload._id;
-};
-
 photoSchema.methods.timestamp = function() {
 	this.uploadDate = moment().format(common.dateFormat);
 };
