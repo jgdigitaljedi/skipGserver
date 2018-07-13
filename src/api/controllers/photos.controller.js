@@ -28,8 +28,17 @@ module.exports.getList = (req, res) => {
 };
 
 module.exports.downloadPhoto = (req, res) => {
-	// @TODO: write this
-	res.status(200).send('Download Photo Success');
+	if (req.body.fileName) {
+		try {
+			res.download(common.rootPath, req.body.fileName);
+		} catch (e) {
+			logger.logThis(e, req);
+			res.status(500).json({ error: e, message: 'ERROR: Problem sending file.' });
+		}
+	} else {
+		logger.logThis('no file name sent', req);
+		res.status(400).json({ error: true, message: 'ERROR: No photo file name in request body.' });
+	}
 };
 
 module.exports.downloadAll = (req, res) => {
@@ -207,7 +216,6 @@ module.exports.deletePhoto = (req, res) => {
 };
 
 module.exports.editTags = (req, res) => {
-	// @TODO: write this
 	if (req.params.hasOwnProperty('id') && req.params.id) {
 		if (req.body.tags) {
 			try {
