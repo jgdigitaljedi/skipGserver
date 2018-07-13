@@ -174,7 +174,7 @@ module.exports.uploadPhotos = (req, res) => {
 module.exports.deletePhoto = (req, res) => {
 	// must be admin to hit this
 	if (req.payload && req.payload.admin) {
-		Photo.findById(req.body._id, (err, photo) => {
+		Photo.findById(req.params.id, (err, photo) => {
 			if (err) {
 				logger.logThis(err, req);
 				res.status(500).json({ error: err, message: 'ERROR: Problem fetching photo for deletion.' });
