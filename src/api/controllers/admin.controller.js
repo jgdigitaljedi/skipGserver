@@ -6,12 +6,16 @@ const logger = require('../config/winston');
 
 module.exports.listUsers = function(req, res) {
 	if (!req.payload.admin) {
-		res.status(403).send('UNAUTHORIZED: Access denied! You must be an admin to get all users!');
+		res
+			.status(403)
+			.json({ error: true, message: 'UNAUTHORIZED: Access denied! You must be an admin to get all users!' });
 	} else {
 		User.find({}, (err, users) => {
 			if (err) {
 				logger.logThis(err, req);
-				res.status(500).send('ERROR: Something went wrong with fetching list of users.');
+				res
+					.status(500)
+					.json({ error: err, message: 'ERROR: Something went wrong with fetching list of users.' });
 			} else {
 				try {
 					const usersCleaned = users.map((item) => {
@@ -25,7 +29,12 @@ module.exports.listUsers = function(req, res) {
 					res.status(200).json(usersCleaned);
 				} catch (e) {
 					logger.logThis(e, req);
-					res.status(500).send('ERROR: Something went wrong with getting user and cleaning results.');
+					res
+						.status(500)
+						.json({
+							error: e,
+							message: 'ERROR: Something went wrong with getting user and cleaning results.'
+						});
 				}
 			}
 		});
@@ -38,12 +47,12 @@ module.exports.deleteUser = function(req, res) {
 		User.findByIdAndRemove({ _id: req.body._id }, (err, result) => {
 			if (err) {
 				logger.logThis(err, req);
-				res.status(500).send('ERROR: Something went wrong with deleting the user.');
+				res.status(500).json({ error: err, message: 'ERROR: Something went wrong with deleting the user.' });
 			} else {
 				res.status(200).json(result);
 			}
 		});
 	} else {
-		res.status(403).send('UNAUTHORIZED: Access Denied! You must be an admin to do this.');
+		res.status(403).json({ error: true, message: 'UNAUTHORIZED: Access Denied! You must be an admin to do this.' });
 	}
 };

@@ -5,11 +5,23 @@ const photoFix = require('../config/photos');
 const fs = require('fs');
 const common = require('../../../common');
 
+function deleteFile(file) {
+	return new Promise((resolve, reject) => {
+		fs.unlink(file, (err) => {
+			if (err) {
+				reject({ success: false, error: err });
+			} else {
+				resolve({ success: true });
+			}
+		});
+	});
+}
+
 module.exports.getList = (req, res) => {
 	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
 		if (err) {
 			logger.logThis(err, req);
-			res.status(500).send('ERROR: Error fetching photos list!');
+			res.status(500).json({ error: err, message: 'ERROR: Error fetching photos list!' });
 		}
 		res.status(200).json(photos);
 	});
@@ -31,14 +43,14 @@ module.exports.getPhotoInfo = (req, res) => {
 		Photo.findById(id, (err, photo) => {
 			if (err) {
 				logger.logThis(err, req);
-				res.status(500).send('ERROR: Error fetching photo info!');
+				res.status(500).json({ error: err, message: 'ERROR: Error fetching photo info!' });
 			} else {
 				res.status(200).json(photo);
 			}
 		});
 	} else {
 		logger.logThis('no id sent', req);
-		req.status(400).send('ERROR: No id sent in request params!');
+		req.status(400).json({ error: true, message: 'ERROR: No id sent in request params!' });
 	}
 };
 
@@ -46,7 +58,7 @@ module.exports.getPhotoByTag = (req, res) => {
 	Photo.find({}, (err, photos) => {
 		if (err) {
 			logger.logThis(err, req);
-			res.status(500).send('ERROR: Error fetching photos from DB.');
+			res.status(500).json({ error: err, message: 'ERROR: Error fetching photos from DB.' });
 		} else {
 			if (req.body.tag) {
 				try {
@@ -59,10 +71,10 @@ module.exports.getPhotoByTag = (req, res) => {
 					res.status(200).json(filtered);
 				} catch (e) {
 					logger.logThis(e, req);
-					res.status(500).send('ERROR: Problem parsing photos data.');
+					res.status(500).json({ error: e, message: 'ERROR: Problem parsing photos data.' });
 				}
 			} else {
-				res.status(200).json([]);
+				res.status(400).json({ error: true, message: 'ERROR: No tag(s) were sent.' });
 			}
 		}
 	});
@@ -72,7 +84,7 @@ module.exports.getPhotoByUploaderId = (req, res) => {
 	Photo.find({}, (err, photos) => {
 		if (err) {
 			logger.logThis(err, req);
-			res.status(500).send('ERROR: Error fetching photos from DB.');
+			res.status(500).json({ error: err, message: 'ERROR: Error fetching photos from DB.' });
 		} else {
 			if (req.body.uploader) {
 				try {
@@ -80,10 +92,10 @@ module.exports.getPhotoByUploaderId = (req, res) => {
 					res.status(200).json(filtered);
 				} catch (e) {
 					logger.logThis(e, req);
-					res.status(500).send('ERROR: Problem parsing photos by tags.');
+					res.status(500).json({ error: e, message: 'ERROR: Problem parsing photos by tags.' });
 				}
 			} else {
-				res.status(200).json([]);
+				res.status(400).json({ error: true, message: 'ERROR: No uploader value sent in request!' });
 			}
 		}
 	});
@@ -93,7 +105,7 @@ module.exports.getPhotoByUploaderName = (req, res) => {
 	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
 		if (err) {
 			logger.logThis(err, req);
-			res.status(500).send('ERROR: Error fetching photos from DB.');
+			res.status(500).json({ error: err, message: 'ERROR: Error fetching photos from DB.' });
 		} else {
 			if (req.body.uploader) {
 				try {
@@ -106,7 +118,7 @@ module.exports.getPhotoByUploaderName = (req, res) => {
 					res.status(200).json(filtered);
 				} catch (e) {
 					logger.logThis(e, req);
-					res.status(500).send('ERROR: Problem parsing photos by uploader name');
+					res.status(500).json({ error: e, message: 'ERROR: Problem parsing photos by uploader name' });
 				}
 			} else {
 				res.status(200).json([]);
@@ -121,7 +133,7 @@ module.exports.uploadPhotos = (req, res) => {
 	const file = req.file;
 	if (!file) {
 		logger.logThis('ERROR: Photo file not received!', req);
-		res.status(500).send('ERROR: Photo file not received!');
+		res.status(500).json({ error: err, message: 'ERROR: Photo file not received!' });
 	} else {
 		try {
 			// remove geo tag data
@@ -145,7 +157,7 @@ module.exports.uploadPhotos = (req, res) => {
 			});
 		} catch (e) {
 			logger.logThis(e, req);
-			res.status(500).send('ERROR: An error occurred with the photo upload process.');
+			res.status(500).json({ error: e, message: 'ERROR: An error occurred with the photo upload process.' });
 		}
 	}
 };
@@ -156,62 +168,104 @@ module.exports.deletePhoto = (req, res) => {
 		Photo.findById(req.body._id, (err, photo) => {
 			if (err) {
 				logger.logThis(err, req);
-				res.status(500).send('ERROR: Problem fetching photo for deletion.');
+				res.status(500).json({ error: err, message: 'ERROR: Problem fetching photo for deletion.' });
 			} else {
 				const filePath = `${common.rootPath}/public/photos/${photo.fileName}`;
 				// delete db entry
-				photo.remove((err) => {
-					if (err) {
-						logger.logThis(err, req);
-						res.status(500).send('ERROR: Problem deleting DB entry for photo.');
+				photo.remove((error) => {
+					if (error) {
+						logger.logThis(error, req);
+						res.status(500).json({ error, message: 'ERROR: Problem deleting DB entry for photo.' });
 					} else {
-						try {
-							// delete file
-							fs.unlink(filePath);
-							// delete thumb
-							const nameSplit = photo.fileName.split('.');
-							const thumbPath = `${common.rootPath}/public/thumbs/${nameSplit[0]}-thumb.${nameSplit[1]}`;
-							fs.unlink(thumbPath);
-							res.status(200).json(photo);
-						} catch (e) {
-							logger.logThis(e, req);
-							res.status(500).send('ERROR: Problem deleting photo and/or thumb from file system');
-						}
+						// delete photo
+						deleteFile(filePath)
+							.then(() => {
+								const thumbPath = `${common.rootPath}/public/thumbs/${nameSplit[0]}-thumb.${nameSplit[1]}`;
+								// delete thumb
+								deleteFile(thumbPath)
+									.then(() => {
+										res.status(200).json(photo);
+									})
+									.catch((e) => {
+										logger.logThis(e, req);
+										res
+											.status(500)
+											.json({ error: e, message: 'ERROR: Problem deleting thumbnail.' });
+									});
+							})
+							.catch((er) => {
+								logger.logThis(er, req);
+								res.status(500).json({ error: er, message: 'ERROR: Problem deleting photo.' });
+							});
 					}
 				});
 			}
 		});
 	} else {
-		res.status(403).send('UNAUTHORIZED: You must be an admin to delete a photo!');
+		res.status(403).send({ error: true, message: 'UNAUTHORIZED: You must be an admin to delete a photo!' });
 	}
 };
 
 module.exports.editTags = (req, res) => {
 	// @TODO: write this
 	if (req.params.hasOwnProperty('id') && req.params.id) {
-		Photo.findById(req.params.id, (err, photo) => {
-			// assign new tags to photo and save, then send response
-			res.status(200).send('Add Tags Success');
-		});
+		if (req.body.tags) {
+			try {
+				const tags = req.body.tags.map((tag) => tag.toLowerCase());
+				Photo.findOneAndUpdate(
+					{ _id: req.params.id },
+					{ $set: { tags: tags } },
+					{ new: true },
+					(err, photo) => {
+						if (err) {
+							logger.logThis(err, req);
+							res
+								.status(500)
+								.json({ error: err, message: 'ERROR: Problem fetching photo from DB to edit tags.' });
+						} else {
+							res.status(200).json(photo);
+						}
+					}
+				);
+			} catch (e) {
+				logger.logThis(e, req);
+				res.status(500).json({ error: e, message: 'ERROR: Problem with updating tags.' });
+			}
+		}
 	} else {
 		logger.logThis('no id sent', req);
-		req.status(400).send('ERROR: No id sent in request params!');
+		req.status(400).json({ error: true, message: 'ERROR: No id sent in request params!' });
 	}
-	// should take action for add or delete
-	// should take tags array
 };
 
 module.exports.editComments = (req, res) => {
-	// @TODO: write this
 	if (req.params.hasOwnProperty('id') && req.params.id) {
-		Photo.findById(req.params.id, (err, photo) => {
-			// assign new comments to photo and save, then send response
-			res.status(200).send('Add Comment Success');
-		});
+		if (req.body.comment && req.body.comment.length) {
+			try {
+				Photo.findById(req.params.id, (err, photo) => {
+					if (err) {
+						logger.logThis(err, req);
+						res.status(500).json({ error: err, message: 'ERROR: Problem getting photo to add comments.' });
+					} else {
+						photo.comments.push({
+							name: req.payload.name,
+							date: moment().format(common.dateFormat),
+							content: req.body.comment
+						});
+						photo.save();
+						res.status(200).json(photo);
+					}
+				});
+			} catch (e) {
+				logger.logThis(e, req);
+				res.status(500).json({ error: e, message: 'ERROR: Problem with saving comment.' });
+			}
+		} else {
+			logger.logThis('no comment sent', req);
+			res.status(400).json({ error: true, message: 'ERROR: No comment sent in request' });
+		}
 	} else {
 		logger.logThis('no id sent', req);
-		req.status(400).send('ERROR: No id sent in request params!');
+		req.status(400).json({ error: true, message: 'ERROR: No id sent in request params!' });
 	}
-	// should take action for add or delete
-	// should take tags array
 };

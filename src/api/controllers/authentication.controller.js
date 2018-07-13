@@ -30,7 +30,7 @@ module.exports.login = function(req, res) {
 		// If Passport throws/catches an error
 		if (err) {
 			logger.logThis(err, req);
-			res.status(404).json(err);
+			res.status(404).json({ error: err, message: 'ERROR: Error with Passport.' });
 			return;
 		}
 
@@ -45,7 +45,7 @@ module.exports.login = function(req, res) {
 				});
 			} catch (e) {
 				logger.logThis(e, req);
-				res.status(500).send('ERROR: Problem logging in.');
+				res.status(500).json({ error: e, message: 'ERROR: Problem logging in.' });
 			}
 		} else {
 			// If user is not found
