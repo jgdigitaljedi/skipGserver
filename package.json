@@ -1,12 +1,13 @@
 {
 	"name": "skipgserver",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"description": "backend for skipg.me",
 	"main": "index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"start": "NODE_ENV=production node src/server.js",
-		"dev": "NODE_ENV=development nodemon --watch src src/server.js"
+		"dev": "NODE_ENV=development nodemon --watch src src/server.js",
+		"docs": "apidoc -i src/api/routes/ -o docs/"
 	},
 	"repository": {
 		"type": "git",
@@ -17,7 +18,9 @@
 		"express",
 		"mongo",
 		"jwt",
-		"passport"
+		"passport",
+		"multer",
+		"apidoc"
 	],
 	"author": "Joey Gauthier",
 	"license": "ISC",
@@ -48,6 +51,7 @@
 		"winston": "^3.0.0"
 	},
 	"devDependencies": {
+		"apidoc": "^0.17.6",
 		"nodemon": "^1.17.5"
 	}
 }

@@ -4,7 +4,7 @@ const logger = require('../config/winston');
 
 // patch user - suspend account for a while and/or modify user
 
-module.exports.listUsers = function(req, res) {
+module.exports.listUsers = function (req, res) {
 	if (!req.payload.admin) {
 		res
 			.status(403)
@@ -41,7 +41,7 @@ module.exports.listUsers = function(req, res) {
 	}
 };
 
-module.exports.deleteUser = function(req, res) {
+module.exports.deleteUser = function (req, res) {
 	// @TODO: needs to be written
 	if (req.payload.admin) {
 		User.findByIdAndRemove({ _id: req.body._id }, (err, result) => {
@@ -49,6 +49,7 @@ module.exports.deleteUser = function(req, res) {
 				logger.logThis(err, req);
 				res.status(500).json({ error: err, message: 'ERROR: Something went wrong with deleting the user.' });
 			} else {
+				// @TODO: write this
 				res.status(200).json(result);
 			}
 		});
