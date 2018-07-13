@@ -40,7 +40,7 @@ module.exports.downloadAll = (req, res) => {
 module.exports.getPhotoInfo = (req, res) => {
 	if (req.params.hasOwnProperty('id') && req.params.id) {
 		const id = req.params.id;
-		Photo.findById(id, (err, photo) => {
+		Photo.findById(id).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photo) => {
 			if (err) {
 				logger.logThis(err, req);
 				res.status(500).json({ error: err, message: 'ERROR: Error fetching photo info!' });
@@ -55,7 +55,7 @@ module.exports.getPhotoInfo = (req, res) => {
 };
 
 module.exports.getPhotoByTag = (req, res) => {
-	Photo.find({}, (err, photos) => {
+	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
 		if (err) {
 			logger.logThis(err, req);
 			res.status(500).json({ error: err, message: 'ERROR: Error fetching photos from DB.' });
@@ -81,7 +81,7 @@ module.exports.getPhotoByTag = (req, res) => {
 };
 
 module.exports.getPhotoByUploaderId = (req, res) => {
-	Photo.find({}, (err, photos) => {
+	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
 		if (err) {
 			logger.logThis(err, req);
 			res.status(500).json({ error: err, message: 'ERROR: Error fetching photos from DB.' });
