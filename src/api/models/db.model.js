@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const logger = require('../config/winston');
 let gracefulShutdown;
-const dbURI = 'mongodb://localhost:27017/skipg';
+let dbURI = 'mongodb://localhost:27017/skipg';
 if (process.env.NODE_ENV === 'production') {
 	dbURI = process.env.SKIPG_URI;
 }
