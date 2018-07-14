@@ -4,30 +4,6 @@ const ctrlPhotos = require('../controllers/photos.controller');
 const uploadMw = require('../config/upload');
 
 /**
- * @api {get} /api/photos Get array of photos from DB
- * @apiName GetPhotos
- * @apiGroup Photos
- * 
- * @apiDescription Gets list of photos from DB and returns as array of objects
- * @apiSuccessExample {json} Success response:
- *    [
- *      {
- *        tags: [],
- *        comments: [],
- *        _id: "9823745982374598237458",
- *        uploadedBy: {
- *          email: "test@test.com",
- *          name: "Tester"
- *        },
- *        uploadDate: "07/11/2018 11:30 am",
- *        __v: 0
- *      }
- *      ...
- *    ]
- */
-router.get('/', ctrlPhotos.getList);
-
-/**
  * @api {get} /api/photos/info/:id Get info about photo
  * @apiName GetPhotoInfo
  * @apiGroup Photos
@@ -71,17 +47,6 @@ router.get('/info/:id', ctrlPhotos.getPhotoInfo);
  *    }
  */
 router.post('/', uploadMw.single('photo'), ctrlPhotos.uploadPhotos);
-
-/**
- * @api {get} /api/photos/:id Download photo file
- * @apiName DownloadPhoto
- * @apiGroup Photos
- * 
- * @apiExample {json} Example request body:
- *    {id: 893465708237465}
- * @apiDescription Downloads a photo
- */
-router.get('/:id', ctrlPhotos.downloadPhoto);
 
 // @TODO: write this method then write apidoc code block
 router.post('/all', ctrlPhotos.downloadAll);
