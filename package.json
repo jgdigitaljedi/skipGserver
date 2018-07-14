@@ -52,6 +52,7 @@
 	},
 	"devDependencies": {
 		"apidoc": "^0.17.6",
+		"frisby": "^2.0.16",
 		"nodemon": "^1.17.5"
 	}
 }

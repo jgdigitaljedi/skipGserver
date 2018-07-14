@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const ctrlAuth = require('../controllers/authentication.controller');
+const ctrlAuth = require('../controllers/user.controller');
 
 /**
  * @api {post} /api/users/register Register new user
