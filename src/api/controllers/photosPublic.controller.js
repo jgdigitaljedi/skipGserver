@@ -2,6 +2,7 @@ const logger = require('../config/winston');
 const mongoose = require('mongoose');
 const Photo = mongoose.model('Photo');
 const common = require('../../../common');
+const path = require('path');
 
 module.exports.getList = (req, res) => {
 	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
@@ -14,15 +15,23 @@ module.exports.getList = (req, res) => {
 };
 
 module.exports.downloadPhoto = (req, res) => {
-	if (req.body.fileName) {
+	if (req.params.id) {
 		try {
-			res.download(common.rootPath, req.body.fileName);
+			Photo.findById(req.params.id, function(err, photo) {
+				if (err) {
+					logger.logThis(err, req);
+					res.status(500).json({ error: err, message: 'ERROR: Problem fetching photo info.' });
+				} else {
+					const filePath = path.join(common.rootPath, `public/photos/${photo.fileName}`);
+					res.download(filePath);
+				}
+			});
 		} catch (e) {
 			logger.logThis(e, req);
 			res.status(500).json({ error: e, message: 'ERROR: Problem sending file.' });
 		}
 	} else {
 		logger.logThis('no file name sent', req);
-		res.status(400).json({ error: true, message: 'ERROR: No photo file name in request body.' });
+		res.status(400).json({ error: true, message: 'ERROR: No photo ID sent in params.' });
 	}
 };

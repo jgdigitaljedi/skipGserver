@@ -6,13 +6,23 @@
 	},
 	"item": [
 		{
-			"name": "auth",
+			"name": "profile",
 			"description": null,
 			"item": [
 				{
-					"name": "register",
+					"name": "getProfile",
 					"request": {
-						"method": "POST",
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyM2MzMjQwZmNiODZlM2JkMjVmOTkiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiZXhwIjoxNTMxNjgwNTQyLCJpYXQiOjE1MzEwNzU3NDJ9.7jT_lnPYtncfoZGkrS4cBqW9wDuzkz6ow5CxqnQmpZ4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -21,10 +31,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"name\": \"Tester McTesterson\",\n\t\"password\": \"test\"\n}"
+							"raw": "{\n  \"email\": \"test@test.com\",\n  \"password\": \"test\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/user/register",
+							"raw": "http://localhost:3000/api/profile",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -32,47 +42,26 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"user",
-								"register"
+								"profile"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "login",
+					"name": "updateProfile",
 					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"test\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/user/login",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"user",
-								"login"
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyM2MzMjQwZmNiODZlM2JkMjVmOTkiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIEJybyIsImFkbWluIjpmYWxzZSwiZXhwIjoxNTMxNjg2NzQyLCJpYXQiOjE1MzEwODE5NDJ9.R_KejX6eaftqQkyIXUaLEKsMyCQQASHFuTsm2jxrxAc",
+									"type": "string"
+								}
 							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "devUser",
-					"request": {
-						"method": "POST",
+						},
+						"method": "PATCH",
 						"header": [
 							{
 								"key": "Content-Type",
@@ -81,10 +70,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"admin@admin.com\",\n\t\"password\": \"admin\",\n\t\"name\": \"admin\"\n}"
+							"raw": "{\n  \"email\": \"tester@terster.net\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/user/devuser",
+							"raw": "http://localhost:3000/api/profile",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -92,8 +81,7 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"user",
-								"devuser"
+								"profile"
 							]
 						}
 					},
@@ -105,79 +93,6 @@
 			"name": "photos",
 			"description": null,
 			"item": [
-				{
-					"name": "getPhotosList",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQ3NDk0NTYyNjFhMzViMmY5NzQ3YWQiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsIm5hbWUiOiJhZG1pbiIsImFkbWluIjp0cnVlLCJleHAiOjE1MzIwMDMyODcsImlhdCI6MTUzMTM5ODQ4N30.xX4VOvfE-i55Oum7x_vaOUhiftJhOvn7BGb0vnWKrRo",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/photos",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"photos"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "deletePhoto",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQ3NDk0NTYyNjFhMzViMmY5NzQ3YWQiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsIm5hbWUiOiJhZG1pbiIsImFkbWluIjp0cnVlLCJleHAiOjE1MzIwMDMyODcsImlhdCI6MTUzMTM5ODQ4N30.xX4VOvfE-i55Oum7x_vaOUhiftJhOvn7BGb0vnWKrRo",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"_id\": \"5b474c7c36360f1799282927\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/photos",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"photos"
-							]
-						}
-					},
-					"response": []
-				},
 				{
 					"name": "uploadPhoto",
 					"request": {
@@ -203,7 +118,8 @@
 							"formdata": [
 								{
 									"key": "photo",
-									"type": "file"
+									"type": "file",
+									"value": ""
 								},
 								{
 									"key": "tags[0]",
@@ -227,6 +143,87 @@
 							"path": [
 								"api",
 								"photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPhotosByTag",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyOGY3ZjczOWUxMTM4ZTZiNWE4Y2EiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE2OTM1ODcsImlhdCI6MTUzMTA4ODc4N30.h_CA1NEgxC17S3M_nzY71LUBYdYFFY7XHCUDWDxfqTg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tag\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/photos/tag",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"photos",
+								"tag"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPhotosByUploaderId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyOGY3ZjczOWUxMTM4ZTZiNWE4Y2EiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE2OTM1ODcsImlhdCI6MTUzMTA4ODc4N30.h_CA1NEgxC17S3M_nzY71LUBYdYFFY7XHCUDWDxfqTg",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"uploader\": \"\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/photos/uploader/id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"photos",
+								"uploader",
+								"id"
 							]
 						}
 					},
@@ -269,7 +266,87 @@
 					"response": []
 				},
 				{
-					"name": "downloadPhoto",
+					"name": "deletePhoto",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQ3NDk0NTYyNjFhMzViMmY5NzQ3YWQiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsIm5hbWUiOiJhZG1pbiIsImFkbWluIjp0cnVlLCJleHAiOjE1MzIwMDMyODcsImlhdCI6MTUzMTM5ODQ4N30.xX4VOvfE-i55Oum7x_vaOUhiftJhOvn7BGb0vnWKrRo",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"_id\": \"5b474c7c36360f1799282927\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/photos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getPhotosByUploaderName",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQ1ZmRlYjJjNTAxMDBmMzA1MzAzZmUiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzIwMDE5OTMsImlhdCI6MTUzMTM5NzE5M30.R--9OofBo1yPi6H14Z9EFaOdWg2w78gFC05vUcUXa70",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"uploader\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/photos/uploader/name",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"photos",
+								"uploader",
+								"name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "editPhotoTags",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -281,14 +358,19 @@
 								}
 							]
 						},
-						"method": "GET",
-						"header": [],
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n  \"tags\": [\n    \"pool\",\n    \"mere mere\",\n    \"backyard\"\n  ]\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/photos/111",
+							"raw": "http://localhost:3000/api/photos/tag/11",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -297,7 +379,8 @@
 							"path": [
 								"api",
 								"photos",
-								"111"
+								"tag",
+								"11"
 							]
 						}
 					},
@@ -339,128 +422,6 @@
 					"response": []
 				},
 				{
-					"name": "getPhotosByTag",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyOGY3ZjczOWUxMTM4ZTZiNWE4Y2EiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE2OTM1ODcsImlhdCI6MTUzMTA4ODc4N30.h_CA1NEgxC17S3M_nzY71LUBYdYFFY7XHCUDWDxfqTg",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"tag\": \"test\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/photos/tag",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"photos",
-								"tag"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getPhotosByUploaderId",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyOGY3ZjczOWUxMTM4ZTZiNWE4Y2EiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE2OTM1ODcsImlhdCI6MTUzMTA4ODc4N30.h_CA1NEgxC17S3M_nzY71LUBYdYFFY7XHCUDWDxfqTg",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"uploader\": \"\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/photos/uploader/id",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"photos",
-								"uploader",
-								"id"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "editPhotoTags",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyOGY3ZjczOWUxMTM4ZTZiNWE4Y2EiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE2OTM1ODcsImlhdCI6MTUzMTA4ODc4N30.h_CA1NEgxC17S3M_nzY71LUBYdYFFY7XHCUDWDxfqTg",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"tags\": [\n\t\t\"pool\",\n\t\t\"mere mere\",\n\t\t\"backyard\"\n\t]\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/photos/tag/11",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"photos",
-								"tag",
-								"11"
-							]
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "editPhotoComments",
 					"request": {
 						"auth": {
@@ -482,7 +443,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"comment\": \"This is a comment. This is a comment on drugs. Any Questions?\"\n}"
+							"raw": "{\n  \"comment\": \"This is a comment. This is a comment on drugs. Any Questions?\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/photos/comment/11",
@@ -496,131 +457,6 @@
 								"photos",
 								"comment",
 								"11"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "getPhotosByUploaderName",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQ1ZmRlYjJjNTAxMDBmMzA1MzAzZmUiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzIwMDE5OTMsImlhdCI6MTUzMTM5NzE5M30.R--9OofBo1yPi6H14Z9EFaOdWg2w78gFC05vUcUXa70",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"uploader\": \"admin\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/photos/uploader/name",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"photos",
-								"uploader",
-								"name"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "profile",
-			"description": null,
-			"item": [
-				{
-					"name": "getProfile",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyM2MzMjQwZmNiODZlM2JkMjVmOTkiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiZXhwIjoxNTMxNjgwNTQyLCJpYXQiOjE1MzEwNzU3NDJ9.7jT_lnPYtncfoZGkrS4cBqW9wDuzkz6ow5CxqnQmpZ4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"test\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/profile",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"profile"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "updateProfile",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyM2MzMjQwZmNiODZlM2JkMjVmOTkiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIEJybyIsImFkbWluIjpmYWxzZSwiZXhwIjoxNTMxNjg2NzQyLCJpYXQiOjE1MzEwODE5NDJ9.R_KejX6eaftqQkyIXUaLEKsMyCQQASHFuTsm2jxrxAc",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PATCH",
-						"header": [
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n\t\"email\": \"tester@terster.net\"\n}"
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/profile",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"profile"
 							]
 						}
 					},
@@ -654,7 +490,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"test\"\n}"
+							"raw": "{\n  \"email\": \"test@test.com\",\n  \"password\": \"test\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/admin/listusers",
@@ -694,7 +530,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"_id\": \"5b423c3240fcb86e3bd25f99\"\n}"
+							"raw": "{\n  \"_id\": \"5b423c3240fcb86e3bd25f99\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/admin/deleteuser",
@@ -707,6 +543,163 @@
 								"api",
 								"admin",
 								"deleteuser"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "auth",
+			"description": null,
+			"item": [
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test@test.com\",\n  \"name\": \"Tester McTesterson\",\n  \"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "devUser",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@admin.com\",\n  \"password\": \"admin\",\n  \"name\": \"admin\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/devuser",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"devuser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"test@test.com\",\n  \"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "photosPublic",
+			"description": "",
+			"item": [
+				{
+					"name": "getPhotosList",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/photospublic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"photospublic"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "downloadPhoto",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/photospublic/5b4b4814dc89955dd4272b1d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"photospublic",
+								"5b4b4814dc89955dd4272b1d"
 							]
 						}
 					},
