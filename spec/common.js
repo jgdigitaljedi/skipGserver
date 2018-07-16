@@ -4,6 +4,10 @@ module.exports = {
 		email: 'test@test.com',
 		password: 'test'
 	},
+	loginAdminCreds: {
+		email: 'admin@admin.com',
+		password: 'admin'
+	},
 	fulllUserCreds: {
 		name: 'Tester McTesterson',
 		email: 'test@test.com',

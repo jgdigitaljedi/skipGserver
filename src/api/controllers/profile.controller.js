@@ -9,7 +9,7 @@ function unarthorizedResponse(res) {
 	});
 }
 
-module.exports.profileRead = function(req, res) {
+module.exports.profileRead = function (req, res) {
 	if (!req.payload._id) {
 		unarthorizedResponse(res);
 	} else {
@@ -24,7 +24,7 @@ module.exports.profileRead = function(req, res) {
 	}
 };
 
-module.exports.profileUpdate = function(req, res) {
+module.exports.profileUpdate = function (req, res) {
 	// res.status(200).json({ request: req.body, payload: req.payload });
 	if (!req.payload._id) {
 		unarthorizedResponse(res);
@@ -32,7 +32,7 @@ module.exports.profileUpdate = function(req, res) {
 		User.findOneAndUpdate(
 			{ _id: req.payload._id },
 			{ $set: req.body },
-			{ runValidators: true, upsert: true },
+			{ runValidators: true, new: true },
 			(err, result) => {
 				if (err) {
 					logger.logThis(err, req);
