@@ -5,14 +5,14 @@ const common = require('./common');
 
 describe('User', function() {
 	it('post#user/register should register a new user and get back a token', function() {
-		return frisby
-			.post(`${common.baseUrl}user/register`, common.fulllUserCreds)
-			.expect('status', 200)
-			.then((response) => {
-				expect(response.body).toBeTruthy();
-				const resParsed = JSON.parse(response.body);
-				expect(Object.keys(resParsed).length).toEqual(2);
-			});
+		const uniqUser = Object.assign({}, common.fulllUserCreds);
+		const emailSplit = uniqUser.email.split('@');
+		uniqUser.email = emailSplit[0] + Math.floor(Math.random() * 300) + emailSplit[1];
+		return frisby.post(`${common.baseUrl}user/register`, uniqUser).expect('status', 200).then((response) => {
+			expect(response.body).toBeTruthy();
+			const resParsed = JSON.parse(response.body);
+			expect(Object.keys(resParsed).length).toEqual(2);
+		});
 	});
 
 	it('post#user/login should login a user', function() {

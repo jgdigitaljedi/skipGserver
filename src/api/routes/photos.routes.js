@@ -22,6 +22,8 @@ const uploadMw = require('../config/upload');
  *      uploadDate: "07/11/2018 11:30 am",
  *      __v: 0
  *    }
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Error fetching photo info!'}
  */
 router.get('/info/:id', ctrlPhotos.getPhotoInfo);
 
@@ -45,11 +47,13 @@ router.get('/info/:id', ctrlPhotos.getPhotoInfo);
  *      uploadDate: "07/11/2018 11:30 am",
  *      __v: 0
  *    }
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: An error occurred with the photo upload process.'}
  */
 router.post('/', uploadMw.single('photo'), ctrlPhotos.uploadPhotos);
 
 // @TODO: write this method then write apidoc code block
-router.post('/all', ctrlPhotos.downloadAll);
+router.get('/all', ctrlPhotos.downloadAll);
 
 /**
  * @api {delete} /api/photos Delete photo
@@ -71,6 +75,8 @@ router.post('/all', ctrlPhotos.downloadAll);
  *      uploadDate: "07/11/2018 11:30 am",
  *      __v: 0
  *    }
+ *  @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Problem deleting photo.'}
  */
 router.delete('/:id', ctrlPhotos.deletePhoto);
 
@@ -97,6 +103,8 @@ router.delete('/:id', ctrlPhotos.deletePhoto);
  *      }
  *      ...
  *    ]
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Problem parsing photos data.'}
  */
 router.post('/tag', ctrlPhotos.getPhotoByTag);
 
@@ -123,6 +131,8 @@ router.post('/tag', ctrlPhotos.getPhotoByTag);
  *      }
  *      ...
  *    ]
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Problem parsing photos by uploader id.'}
  */
 router.post('/uploader/id', ctrlPhotos.getPhotoByUploaderId);
 
@@ -149,6 +159,8 @@ router.post('/uploader/id', ctrlPhotos.getPhotoByUploaderId);
  *      }
  *      ...
  *    ]
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Problem parsing photos by uploader name.'}
  */
 router.post('/uploader/name', ctrlPhotos.getPhotoByUploaderName);
 
@@ -173,6 +185,8 @@ router.post('/uploader/name', ctrlPhotos.getPhotoByUploaderName);
  *      uploadDate: "07/11/2018 11:30 am",
  *      __v: 0
  *    }
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Problem fetching photo from DB to edit tags.'}
  */
 router.patch('/tag/:id', ctrlPhotos.editTags);
 
@@ -196,6 +210,8 @@ router.patch('/tag/:id', ctrlPhotos.editTags);
  *      uploadDate: "07/11/2018 11:30 am",
  *      __v: 0
  *    }
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Problem with saving comment.'}
  */
 router.patch('/comment/:id', ctrlPhotos.editComments);
 

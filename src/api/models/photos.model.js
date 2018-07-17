@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 const moment = require('moment');
 const common = require('../../../common');
-// const User = mongoose.model('User');
-
-// function findUser(id) {
-// 	return User.findById(id).exec();
-// }
 
 const photoSchema = new mongoose.Schema({
 	uploadDate: {

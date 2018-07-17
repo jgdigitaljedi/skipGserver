@@ -16,6 +16,8 @@ const ctrlProfile = require('../controllers/profile.controller');
  *        admin: false
  *      }
  *    ]
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Error fetching user profile.'}
  */
 router.get('/', ctrlProfile.profileRead);
 
@@ -35,6 +37,8 @@ router.get('/', ctrlProfile.profileRead);
  *        admin: false
  *      }
  *    ]
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Error updating user data.'}
  */
 router.patch('/', ctrlProfile.profileUpdate);
 

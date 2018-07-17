@@ -78,7 +78,7 @@ module.exports.getPhotoByUploaderId = (req, res) => {
 					res.status(200).json(filtered);
 				} catch (e) {
 					logger.logThis(e, req);
-					res.status(500).json({ error: e, message: 'ERROR: Problem parsing photos by tags.' });
+					res.status(500).json({ error: e, message: 'ERROR: Problem parsing photos by uploader id.' });
 				}
 			} else {
 				res.status(400).json({ error: true, message: 'ERROR: No uploader value sent in request!' });
@@ -104,7 +104,7 @@ module.exports.getPhotoByUploaderName = (req, res) => {
 					res.status(200).json(filtered);
 				} catch (e) {
 					logger.logThis(e, req);
-					res.status(500).json({ error: e, message: 'ERROR: Problem parsing photos by uploader name' });
+					res.status(500).json({ error: e, message: 'ERROR: Problem parsing photos by uploader name.' });
 				}
 			} else {
 				res.status(200).json([]);

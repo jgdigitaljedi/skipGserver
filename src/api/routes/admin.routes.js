@@ -19,6 +19,8 @@ const ctrlAdmin = require('../controllers/admin.controller');
  *      },
  *      ...
  *    ]
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Something went wrong with fetching list of users.'}
  */
 router.get('/listusers', ctrlAdmin.listUsers);
 
@@ -43,6 +45,8 @@ router.get('/listusers', ctrlAdmin.listUsers);
  *        hash: "asdf982345n89asdf8h39845n98sdfh"
  *      }
  *    ]
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Something went wrong with deleting the user.'}
  */
 router.delete('/deleteuser', ctrlAdmin.deleteUser);
 

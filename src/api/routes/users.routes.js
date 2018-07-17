@@ -18,6 +18,8 @@ const ctrlAuth = require('../controllers/user.controller');
  *      token: "n9iuas0dfg8uq348tuhas0d8f7ha38475hb0a8s7dfq8374th8a",
  *      admin: false
  *    }
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Problem saving new user to DB.'}
  */
 router.post('/register', ctrlAuth.register);
 
@@ -36,6 +38,8 @@ router.post('/register', ctrlAuth.register);
  *      token: "n9iuas0dfg8uq348tuhas0d8f7ha38475hb0a8s7dfq8374th8a",
  *      admin: false
  *    }
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Problem logging in.'}
  */
 router.post('/login', ctrlAuth.login);
 

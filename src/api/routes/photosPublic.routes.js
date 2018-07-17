@@ -23,6 +23,8 @@ const ctrlPublic = require('../controllers/photosPublic.controller');
  *      }
  *      ...
  *    ]
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Error fetching photos list!'}
  */
 router.get('/', ctrlPublic.getList);
 
@@ -34,6 +36,8 @@ router.get('/', ctrlPublic.getList);
  * @apiExample {json} Example request body:
  *    {id: 893465708237465}
  * @apiDescription Downloads a photo
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Problem sending file.'}
  */
 router.get('/:id', ctrlPublic.downloadPhoto);
 
