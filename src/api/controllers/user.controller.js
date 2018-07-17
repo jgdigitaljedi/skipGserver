@@ -13,13 +13,18 @@ module.exports.register = function(req, res) {
 	user.setPassword(req.body.password);
 
 	user.save(function(err) {
-		let token;
-		token = user.generateJwt();
-		res.status(200);
-		res.json({
-			token: token,
-			admin: false
-		});
+		if (err) {
+			logger.logThis(err, req);
+			res.status(500).json({ error: err, message: 'ERROR: Problem saving new user to DB.' });
+		} else {
+			let token;
+			token = user.generateJwt();
+			res.status(200);
+			res.json({
+				token: token,
+				admin: false
+			});
+		}
 	});
 };
 

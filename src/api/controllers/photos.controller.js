@@ -4,6 +4,7 @@ const Photo = mongoose.model('Photo');
 const photoFix = require('../config/photos');
 const fs = require('fs');
 const common = require('../../../common');
+const moment = require('moment');
 
 function deleteFile(file) {
 	return new Promise((resolve, reject) => {
@@ -16,30 +17,6 @@ function deleteFile(file) {
 		});
 	});
 }
-
-// module.exports.getList = (req, res) => {
-// 	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
-// 		if (err) {
-// 			logger.logThis(err, req);
-// 			res.status(500).json({ error: err, message: 'ERROR: Error fetching photos list!' });
-// 		}
-// 		res.status(200).json(photos);
-// 	});
-// };
-
-// module.exports.downloadPhoto = (req, res) => {
-// 	if (req.body.fileName) {
-// 		try {
-// 			res.download(common.rootPath, req.body.fileName);
-// 		} catch (e) {
-// 			logger.logThis(e, req);
-// 			res.status(500).json({ error: e, message: 'ERROR: Problem sending file.' });
-// 		}
-// 	} else {
-// 		logger.logThis('no file name sent', req);
-// 		res.status(400).json({ error: true, message: 'ERROR: No photo file name in request body.' });
-// 	}
-// };
 
 module.exports.downloadAll = (req, res) => {
 	// @TODO: write this
@@ -142,7 +119,7 @@ module.exports.uploadPhotos = (req, res) => {
 	const file = req.file;
 	if (!file) {
 		logger.logThis('ERROR: Photo file not received!', req);
-		res.status(500).json({ error: err, message: 'ERROR: Photo file not received!' });
+		res.status(500).json({ error: 'upload not received', message: 'ERROR: Photo file not received!' });
 	} else {
 		try {
 			// remove geo tag data
@@ -162,7 +139,12 @@ module.exports.uploadPhotos = (req, res) => {
 			}
 			photo.comments = [];
 			photo.save((err) => {
-				res.status(200).json(photo);
+				if (err) {
+					logger.logThis(err, req);
+					res.status(500).json({ error: err, message: 'ERROR: Problem saving photo.' });
+				} else {
+					res.status(200).json(photo);
+				}
 			});
 		} catch (e) {
 			logger.logThis(e, req);
@@ -186,6 +168,7 @@ module.exports.deletePhoto = (req, res) => {
 						logger.logThis(error, req);
 						res.status(500).json({ error, message: 'ERROR: Problem deleting DB entry for photo.' });
 					} else {
+						const nameSplit = photo.fileName.split('.');
 						// delete photo
 						deleteFile(filePath)
 							.then(() => {

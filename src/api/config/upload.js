@@ -16,7 +16,6 @@ const storage = multer.diskStorage({
 		if (image) {
 			cb(null, true);
 		} else {
-			console.log('file not supported');
 			return cb();
 		}
 	},
