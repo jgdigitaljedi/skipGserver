@@ -9,8 +9,9 @@ module.exports = {
 		password: 'admin'
 	},
 	fulllUserCreds: {
-		name: 'Tester McTesterson',
+		firstName: 'Tester',
+		lastName: 'McTesterson',
 		email: 'test@test.com',
-		password: '123456abcd'
+		password: 'test'
 	}
 };

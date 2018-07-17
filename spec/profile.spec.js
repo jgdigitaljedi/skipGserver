@@ -40,9 +40,8 @@ describe('Profile', function () {
 			.expect('status', 200)
 			.then((data) => {
 				const parsed = JSON.parse(data.body);
-				expect(Object.keys(parsed).length).toEqual(3);
+				expect(Object.keys(parsed).length).toEqual(6);
 				expect(parsed.admin).toBeFalsy();
-				// expect(parsed.name).toEqual('Tester McTesterson');
 			});
 	});
 
@@ -51,12 +50,12 @@ describe('Profile', function () {
 			.fetch(`${common.baseUrl}profile`, {
 				method: 'PATCH',
 				headers,
-				body: JSON.stringify({ name: 'Tester McNamechange' })
+				body: JSON.stringify({ lastName: 'McNamechange' })
 			})
 			.expect('status', 200)
 			.then((data) => {
 				const parsed = JSON.parse(data.body);
-				expect(parsed.name).toEqual('Tester McNamechange');
+				expect(parsed.lastName).toEqual('McNamechange');
 			});
 	});
 });

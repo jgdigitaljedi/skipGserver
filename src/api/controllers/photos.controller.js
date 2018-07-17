@@ -97,8 +97,8 @@ module.exports.getPhotoByUploaderName = (req, res) => {
 				try {
 					const filterText = req.body.uploader.toLowerCase();
 					const filtered = photos.filter((p) => {
-						if (p.uploadedBy && p.uploadedBy.name) {
-							return p.uploadedBy.name.indexOf(filterText) >= 0;
+						if (p.uploadedBy && p.uploadedBy.firstName) {
+							return p.uploadedBy.firstName.indexOf(filterText) >= 0 || (p.uploadedBy.hasOwnProperty('lastName') && p.uploadedBy.lastName.indexOf(filterText) >= 0);
 						}
 					});
 					res.status(200).json(filtered);
@@ -239,7 +239,8 @@ module.exports.editComments = (req, res) => {
 						res.status(500).json({ error: err, message: 'ERROR: Problem getting photo to add comments.' });
 					} else {
 						photo.comments.push({
-							name: req.payload.name,
+							commenterId: req.payload._id,
+							name: `${req.payload.firstName} ${req.payload.lastName}`,
 							date: moment().format(common.dateFormat),
 							content: req.body.comment
 						});

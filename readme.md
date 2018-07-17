@@ -24,6 +24,12 @@ Mac install:
 brew install exiftool
 ```
 ---
+### Initial setup ###
+```
+git clone
+npm i
+```
+---
 ### Run dev server ###
 ```
 git clone https://github.com/jgdigitaljedi/skipGserver

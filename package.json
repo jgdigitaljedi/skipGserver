@@ -1,13 +1,14 @@
 {
 	"name": "skipgserver",
-	"version": "0.1.0",
+	"version": "0.4.4",
 	"description": "backend for skipg.me",
 	"main": "index.js",
 	"scripts": {
 		"test": "concurrently --kill-others \"NODE_ENV=development node src/server.js\" \"jest --verbose\"",
 		"start": "NODE_ENV=production node src/server.js",
 		"dev": "NODE_ENV=development nodemon --watch src src/server.js",
-		"docs": "apidoc -i src/api/routes/ -o docs/"
+		"docs": "apidoc -i src/api/routes/ -o docs/",
+		"seed": "node seed/users.js"
 	},
 	"repository": {
 		"type": "git",
