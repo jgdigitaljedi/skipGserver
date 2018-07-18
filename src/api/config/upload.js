@@ -10,12 +10,14 @@ const storage = multer.diskStorage({
 	},
 	fileFilter: (req, file, cb) => {
 		if (!file) {
+			console.error('no file');
 			cb();
 		}
 		const image = file.mimetype.startsWith('image/');
 		if (image) {
 			cb(null, true);
 		} else {
+			console.error('no image');
 			return cb();
 		}
 	},

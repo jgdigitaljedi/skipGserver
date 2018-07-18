@@ -16,11 +16,15 @@ const photoSchema = new mongoose.Schema({
 		ref: 'User',
 		required: true
 	},
-	tags: [ { type: String } ],
-	comments: [ { type: mongoose.Schema.Types.ObjectId, ref: 'Comment' } ]
+	tags: [{ type: String }],
+	comments: [{
+		commenter: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+		content: String,
+		date: String
+	}]
 });
 
-photoSchema.methods.timestamp = function() {
+photoSchema.methods.timestamp = function () {
 	this.uploadDate = moment().format(common.dateFormat);
 };
 

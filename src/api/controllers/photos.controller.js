@@ -117,6 +117,7 @@ module.exports.uploadPhotos = (req, res) => {
 	// @TODO: consider making thumb creation and exif stripping async and mandatory for success
 	// no comments on upload just to make this simpler
 	const file = req.file;
+	console.warn('req.file', file);
 	if (!file) {
 		logger.logThis('ERROR: Photo file not received!', req);
 		res.status(500).json({ error: 'upload not received', message: 'ERROR: Photo file not received!' });
@@ -239,13 +240,18 @@ module.exports.editComments = (req, res) => {
 						res.status(500).json({ error: err, message: 'ERROR: Problem getting photo to add comments.' });
 					} else {
 						photo.comments.push({
-							commenterId: req.payload._id,
-							name: `${req.payload.firstName} ${req.payload.lastName}`,
+							commenter: req.payload._id,
 							date: moment().format(common.dateFormat),
 							content: req.body.comment
 						});
-						photo.save();
-						res.status(200).json(photo);
+						photo.save((er) => {
+							if (er) {
+								logger.logThis(er, req);
+								res.status(500).json({ error: er, message: 'ERROR: Problem saving comment.' });
+							} else {
+								res.status(200).json(photo);
+							}
+						});
 					}
 				});
 			} catch (e) {
