@@ -24,7 +24,7 @@ const options = {
 const logger = winston.createLogger({
 	level: 'info',
 	format: winston.format.json(),
-	transports: [ new winston.transports.File(options.file), new winston.transports.Console(options.console) ],
+	transports: [new winston.transports.File(options.file), new winston.transports.Console(options.console)],
 	exitOnError: false // do not exit on handled exceptions
 });
 
@@ -40,6 +40,14 @@ logger.logThis = (err, req) => {
 	logger.error(
 		err.status || 500 + ' -  ' + err.message + ' - ' + req.originalUrl + ' - ' + req.method + ' - ' + req.ip
 	);
+};
+
+logger.logInfo = (operation) => {
+	logger.info(operation);
+};
+
+logger.logWarning = (warning) => {
+	logger.warn(warning)
 };
 
 module.exports = logger;

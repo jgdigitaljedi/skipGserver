@@ -1,50 +1,53 @@
 // seeds test and admin user to dev db
-(function () {
-	const mongoose = require('mongoose');
-	const db = require('../src/api/models/db.model');
+const mongoose = require('mongoose');
+const User = mongoose.model('User');
+const seedThis = [
+	{
+		firstName: 'Tester',
+		lastName: 'McTesterson',
+		email: 'test@test.com',
+		password: 'test',
+		admin: false
+	},
+	{
+		firstName: 'Admin',
+		lastName: 'O\'Administrator',
+		email: 'admin@admin.com',
+		password: 'admin',
+		admin: true
+	}
+];
+module.exports.seedUsers = function () {
+	return new Promise((resolve, reject) => {
+		User.remove({}, (err) => {
+			if (!err) {
+				seedThis.forEach((item, index) => {
+					console.log('item', item);
+					const user = new User();
 
-	mongoose.connect('mongodb://localhost:27017/skipg', { useNewUrlParser: true });
-	const User = mongoose.model('User');
-	const seedThis = [
-		{
-			firstName: 'Tester',
-			lastName: 'McTesterson',
-			email: 'test@test.com',
-			password: 'test',
-			admin: false
-		},
-		{
-			firstName: 'Admin',
-			lastName: 'O\'Administrator',
-			email: 'admin@admin.com',
-			password: 'admin',
-			admin: true
-		}
-	];
+					user.firstName = item.firstName;
+					user.lastName = item.lastName;
+					user.email = item.email;
+					user.admin = item.admin;
+					user.joinDateAdd();
+					user.profileUpdated();
 
-	User.remove({}, (err) => {
-		if (!err) {
-			seedThis.forEach((item) => {
-				const user = new User();
+					user.setPassword(item.password);
 
-				user.firstName = item.firstName;
-				user.lastName = item.lastName;
-				user.email = item.email;
-				user.admin = item.admin;
-				user.joinDateAdd();
-				user.profileUpdated();
-
-				user.setPassword(item.password);
-
-				user.save(function (err) {
-					if (err) {
-						console.error('ERROR: Problem seeding DB.');
-					} else {
-						console.log(`SUCCESS! Seeded ${item.name} to your DB!`);
-					}
+					user.save(function (err, user) {
+						if (err) {
+							console.error('ERROR: Problem seeding DB.');
+							reject(err);
+						} else {
+							console.log(`SUCCESS! Seeded ${item.firstName} to your DB!`);
+							if (index === 1) {
+								resolve(user);
+							}
+						}
+					});
 				});
-			});
-		}
+			}
+		});
 	});
-})();
+};
 

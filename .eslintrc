@@ -17,9 +17,16 @@
 		"no-console": 0,
 		"valid-typeof": "warn",
 		"eqeqeq": "warn",
-		"semi": [ "warn" ],
-		"indent": [ "error", "tab" ],
-		"linebreak-style": [ "error", "unix" ],
-		"quotes": [ "error", "single" ]
+		"semi": [
+			"warn"
+		],
+		"linebreak-style": [
+			"error",
+			"unix"
+		],
+		"quotes": [
+			"error",
+			"single"
+		]
 	}
 }

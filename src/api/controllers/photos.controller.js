@@ -5,6 +5,8 @@ const photoFix = require('../config/photos');
 const fs = require('fs');
 const common = require('../../../common');
 const moment = require('moment');
+const bluebird = require('bluebird');
+const archive = require('../config/archive');
 
 function deleteFile(file) {
 	return new Promise((resolve, reject) => {
@@ -117,36 +119,44 @@ module.exports.uploadPhotos = (req, res) => {
 	// @TODO: consider making thumb creation and exif stripping async and mandatory for success
 	// no comments on upload just to make this simpler
 	const file = req.file;
-	console.warn('req.file', file);
 	if (!file) {
 		logger.logThis('ERROR: Photo file not received!', req);
 		res.status(500).json({ error: 'upload not received', message: 'ERROR: Photo file not received!' });
 	} else {
 		try {
+			const promiseArr = [photoFix.removeExif, photoFix.createThumb];
 			// remove geo tag data
-			photoFix.removeExif(req.file);
-			// create thumb for view photos page
-			photoFix.createThumb(req.file);
-			// create and save photo info to db
-			let photo = new Photo();
-			photo.uploadedBy = req.payload._id;
-			photo.timestamp();
-			photo.fileName = file.filename;
-			if (req.body.tags) {
-				// convert tags to lwoer case for easier use later
-				photo.tags = req.body.tags.map((tag) => tag.toLowerCase());
-			} else {
-				photo.tags = [];
-			}
-			photo.comments = [];
-			photo.save((err) => {
-				if (err) {
-					logger.logThis(err, req);
-					res.status(500).json({ error: err, message: 'ERROR: Problem saving photo.' });
-				} else {
-					res.status(200).json(photo);
-				}
-			});
+			bluebird.map(promiseArr, (step) => {
+				return step(req.file);
+			})
+				.then((result) => {
+					let photo = new Photo();
+					photo.fillDetails(result);
+					photo.timestamp();
+					photo.uploadedBy = req.payload._id;
+					photo.fileName = file.filename;
+					if (req.body.tags) {
+						// convert tags to lwoer case for easier use later
+						photo.tags = req.body.tags.map((tag) => tag.toLowerCase());
+					} else {
+						photo.tags = [];
+					}
+					photo.comments = [];
+					photo.save((err) => {
+						if (err) {
+							logger.logThis(err, req);
+							res.status(500).json({ error: err, message: 'ERROR: Problem saving photo.' });
+						} else {
+							archive.makeZip();
+							res.status(200).json(photo);
+						}
+					});
+				})
+				.catch((error) => {
+					console.log('error', error);
+					logger.logThis(error, req);
+					req.status(500).json({ error, message: 'ERROR: Something went wrong with either creating thumbnail or removing exif data.' });
+				});
 		} catch (e) {
 			logger.logThis(e, req);
 			res.status(500).json({ error: e, message: 'ERROR: An error occurred with the photo upload process.' });
