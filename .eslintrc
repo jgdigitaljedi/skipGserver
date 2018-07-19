@@ -14,9 +14,10 @@
 		"no-undef": "warn",
 		"no-unreachable": "warn",
 		"no-unused-vars": "warn",
+		"no-console": 0,
 		"valid-typeof": "warn",
 		"eqeqeq": "warn",
-		"semi": [ "warn, always" ],
+		"semi": [ "warn" ],
 		"indent": [ "error", "tab" ],
 		"linebreak-style": [ "error", "unix" ],
 		"quotes": [ "error", "single" ]

@@ -4,25 +4,18 @@
 	"description": "backend for skipg.me",
 	"main": "index.js",
 	"scripts": {
-		"test": "concurrently --kill-others \"NODE_ENV=development node src/server.js\" \"jest --verbose\"",
+		"test": "npm run lint && concurrently --kill-others \"NODE_ENV=development node src/server.js\" \"jest --verbose\"",
 		"start": "NODE_ENV=production node src/server.js",
 		"dev": "NODE_ENV=development nodemon --watch src src/server.js",
 		"docs": "apidoc -i src/api/routes/ -o docs/",
-		"seed": "node seed/users.js"
+		"seed": "node seed/users.js",
+		"lint": "./node_modules/.bin/eslint --fix --ignore-path .eslintignore . src/api/"
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/jgdigitaljedi/skipGserver.git"
 	},
-	"keywords": [
-		"node",
-		"express",
-		"mongo",
-		"jwt",
-		"passport",
-		"multer",
-		"apidoc"
-	],
+	"keywords": [ "node", "express", "mongo", "jwt", "passport", "multer", "apidoc" ],
 	"author": "Joey Gauthier",
 	"license": "ISC",
 	"bugs": {
@@ -31,6 +24,7 @@
 	"homepage": "https://github.com/jgdigitaljedi/skipGserver#readme",
 	"dependencies": {
 		"app-root-path": "^2.1.0",
+		"archiver": "^2.1.1",
 		"body-parser": "^1.18.3",
 		"concat-stream": "^1.6.2",
 		"cookie-parser": "^1.4.3",
@@ -55,6 +49,7 @@
 		"apidoc": "^0.17.6",
 		"axios": "^0.18.0",
 		"concurrently": "^3.6.0",
+		"eslint": "^5.1.0",
 		"frisby": "^2.0.16",
 		"jest": "^23.4.1",
 		"nodemon": "^1.17.5"

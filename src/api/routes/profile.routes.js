@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const ctrlProfile = require('../controllers/profile.controller');
 
+// @TODO: write view profile endpoint (should get all uploads and comments as well as return user info)
+
 /**
  * @api {get} /api/profile Get user profile
  * @apiName GetProfile

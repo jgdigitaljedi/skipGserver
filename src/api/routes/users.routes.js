@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const ctrlAuth = require('../controllers/user.controller');
 
+// @TODO: write reset password endpoint
+// @TODO: write forgot password endpoint
+// @TODO: write delete account password endpoint
+
 /**
  * @api {post} /api/users/register Register new user
  * @apiName RegisterUser

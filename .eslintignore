@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+src/.DS_Store
+src/api/.DS_Store
+docs/
+logs/
+public/
+spec/
