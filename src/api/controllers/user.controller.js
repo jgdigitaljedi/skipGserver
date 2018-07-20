@@ -2,7 +2,15 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const logger = require('../config/winston');
+const crypto = require('crypto');
 
+/**
+ * POST /users/register
+ * Registers user
+ * req.body.email, req.body.firstName, req.body.lastName?, req.body.password
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.register = function (req, res) {
 	const user = new User();
 
@@ -35,6 +43,13 @@ module.exports.register = function (req, res) {
 	});
 };
 
+/**
+ * POST /users/login
+ * Logs user in and returns token and basic info
+ * req.body.email, req.body.password
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.login = function (req, res) {
 	passport.authenticate('local', (err, user, info) => {
 		let token;
@@ -70,6 +85,41 @@ module.exports.login = function (req, res) {
 	})(req, res);
 };
 
+/**
+ * DELETE /users
+ * Deletes a user from the system
+ * req.body.password, req.body.email
+ * @param {*} req 
+ * @param {*} res 
+ */
+module.exports.deleteMe = function (req, res) {
+	User.findById(req.payload._id, (error, user) => {
+		if (error) {
+			logger.logThis(error, req);
+			res.status(500).json({ error, message: 'ERROR: Problem fetching user info to delete.' });
+		} else {
+			const sentPwHas = crypto.pbkdf2Sync(req.body.password, user.salt, 1000, 64, 'sha512').toString('hex');
+			if ((req.body.email === user.email) && (sentPwHas === user.hash)) {
+				user.remove((err) => {
+					if (err) {
+						logger.logThis(err, req);
+						res.status(500).json({ error: err, message: 'ERROR: Problem deleting user after found.' });
+					} else {
+						res.status(200).json({ error: false, message: 'User successfully deleted form system.' });
+					}
+				});
+			}
+		}
+	});
+};
+
+/**
+ * POST /users/devuser
+ * Dev only endpoint to get register response without registering to DB
+ * req.body.email, req.body.firstName, req.body.lastName?, req.body.password
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.devUser = function (req, res) {
 	const env = process.env.NODE_ENV || 'development';
 	if (env === 'production') {
@@ -77,7 +127,8 @@ module.exports.devUser = function (req, res) {
 	} else {
 		const user = new User();
 
-		user.name = req.body.name;
+		user.firstName = req.body.firstName;
+		user.lastName = req.body.hasOwnProperty('lastName') ? req.body.lastName : null;
 		user.email = req.body.email;
 		user.admin = false;
 		user.joinDateAdd();

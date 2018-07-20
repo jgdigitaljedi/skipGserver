@@ -5,3 +5,7 @@ node_modules/
 .DS_Store
 src/.DS_Store
 src/api/.DS_Store
+
+# can be generated via npm script
+logs/
+docs/

@@ -169,7 +169,6 @@ module.exports.getPhotoByUploaderName = (req, res) => {
  * @param {*} res 
  */
 module.exports.uploadPhotos = (req, res) => {
-	// @TODO: consider making thumb creation and exif stripping async and mandatory for success
 	// no comments on upload just to make this simpler
 	const file = req.file;
 	if (!file) {
@@ -177,7 +176,7 @@ module.exports.uploadPhotos = (req, res) => {
 		res.status(500).json({ error: 'upload not received', message: 'ERROR: Photo file not received!' });
 	} else {
 		try {
-			const promiseArr = [ photoFix.removeExif, photoFix.createThumb ];
+			const promiseArr = [photoFix.removeExif, photoFix.createThumb];
 			// remove geo tag data
 			bluebird
 				.map(promiseArr, (step) => {

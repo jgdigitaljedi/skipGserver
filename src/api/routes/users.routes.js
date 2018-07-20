@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const ctrlAuth = require('../controllers/user.controller');
+const jwt = require('express-jwt');
+const auth = jwt({
+  secret: process.env.SKIPGSECRET,
+  userProperty: 'payload'
+});
 
 // @TODO: write reset password endpoint
 // @TODO: write forgot password endpoint
@@ -46,6 +51,23 @@ router.post('/register', ctrlAuth.register);
  *    {error: <system error message>, message: 'ERROR: Problem logging in.'}
  */
 router.post('/login', ctrlAuth.login);
+
+/**
+ * @api {delete} /api/users Delete user account
+ * @apiGroup Users
+ * @apiName DeleteUser
+ * 
+ * @apiDescription Endpoint for logged in user to delete their account.
+ * @apiExample {json} Example request body:
+ *    {email: "test@test.com", password: "5g6a65867er5654f"}
+ * @apiSuccessExample {json} Success response:
+ *    {
+ *      {error: false, message: "User successfuly deleted from system."}
+ *    }
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Problem logging in.'}
+ */
+router.delete('/', auth, ctrlAuth.deleteMe);
 
 /**
  * @api {post} /api/users/devuser Test password and token creation

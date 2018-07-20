@@ -52,7 +52,13 @@ router.get('/info/:id', ctrlPhotos.getPhotoInfo);
  */
 router.post('/', uploadMw.single('photo'), ctrlPhotos.uploadPhotos);
 
-// @TODO: write this method then write apidoc code block
+/**
+ * @api {get} /api/photos/all Download zip of photos
+ * @apiName DownloadAll
+ * @apiGroup Photos
+ * 
+ * @apiDescription Downloads a zip file containing all photos uploaded to site
+ */
 router.get('/all', ctrlPhotos.downloadAll);
 
 /**
