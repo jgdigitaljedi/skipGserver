@@ -3,7 +3,7 @@
 ```
 mongo
 use skipg
-db.users.insert({email:'admin@admin.com', name: 'admin', admin: true, salt: 'yourGeneratedSalt', 'hash': 'yourGeneratedHash'})
+db.users.insert({email:'admin@admin.com', firstName: 'Admin', lastName: 'McAdmin', joinedDate: '', lastUpdated: '', admin: true, salt: 'yourGeneratedSalt', 'hash': 'yourGeneratedHash'})
 ```
 
 ## ** Drop DB **
@@ -14,7 +14,13 @@ db.dropDatabase()
 ```
 
 ## ** Install exiftool on server **
+Ubuntu or Linux distro with apt
 ```
 sudo apt-get install libimage-exiftool-perl
+```
+
+Mac
+```
+brew install exiftool
 ```
 
