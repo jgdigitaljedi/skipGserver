@@ -9,6 +9,12 @@ function unarthorizedResponse(res) {
 	});
 }
 
+/**
+ * GET /profile
+ * Gets user profile
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.profileRead = function (req, res) {
 	if (!req.payload._id) {
 		unarthorizedResponse(res);
@@ -24,6 +30,13 @@ module.exports.profileRead = function (req, res) {
 	}
 };
 
+/**
+ * PATCH /profile
+ * Edits user profile
+ * req.body.name?, req.body.email?
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.profileUpdate = function (req, res) {
 	// res.status(200).json({ request: req.body, payload: req.payload });
 	if (!req.payload._id) {

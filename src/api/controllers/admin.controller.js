@@ -4,6 +4,12 @@ const logger = require('../config/winston');
 
 // patch user - suspend account for a while and/or modify user
 
+/**
+ * GET /admin/listusers
+ * Returns a list of users
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.listUsers = function (req, res) {
 	if (!req.payload.admin) {
 		res
@@ -41,6 +47,13 @@ module.exports.listUsers = function (req, res) {
 	}
 };
 
+/**
+ * DELETE /admin/deleteuser
+ * Deletes a user account
+ * req.body._id
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.deleteUser = function (req, res) {
 	// @TODO: needs to be written
 	if (req.payload.admin) {

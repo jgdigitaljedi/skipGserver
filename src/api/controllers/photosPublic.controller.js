@@ -4,6 +4,12 @@ const Photo = mongoose.model('Photo');
 const common = require('../../../common');
 const path = require('path');
 
+/**
+ * GET /photospublic
+ * Returns an array of objects for uploaded photos
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.getList = (req, res) => {
 	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
 		if (err) {
@@ -14,10 +20,16 @@ module.exports.getList = (req, res) => {
 	});
 };
 
+/**
+ * GET /photospublic/:id
+ * Downloads a photo using photo ID
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.downloadPhoto = (req, res) => {
 	if (req.params.id) {
 		try {
-			Photo.findById(req.params.id, function(err, photo) {
+			Photo.findById(req.params.id, function (err, photo) {
 				if (err) {
 					logger.logThis(err, req);
 					res.status(500).json({ error: err, message: 'ERROR: Problem fetching photo info.' });
