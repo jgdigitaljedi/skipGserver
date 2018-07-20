@@ -48,7 +48,7 @@ function deleteZip() {
 
 function copySeedPhoto() {
 	console.log('copying seed');
-	return new Promise((resolve, reject) => {
+	return new Promise((resolve) => {
 		// copy seed photo to photos dir
 		const readStream = fs.createReadStream(path.join(common.rootPath, 'seed/seedPhoto.jpeg'));
 		const writeStream = fs.createWriteStream(path.join(common.rootPath, 'public/photos/photo-seed--test.jpeg'));

@@ -7,6 +7,7 @@ const common = require('../../../common');
 const moment = require('moment');
 const bluebird = require('bluebird');
 const archive = require('../config/archive');
+const path = require('path');
 
 function deleteFile(file) {
 	return new Promise((resolve, reject) => {
@@ -20,11 +21,27 @@ function deleteFile(file) {
 	});
 }
 
+/**
+ * GET /photos/all
+ * Downloads zip file containing all photos
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.downloadAll = (req, res) => {
-	// @TODO: write this
-	res.status(200).send('Download ALL Photos Success');
+	try {
+		res.download(path.join(common.rootPath, 'public/Skipg.zip'));
+	} catch (e) {
+		logger.logThis(e, req);
+		res.status(500).json({ error: e, message: 'ERROR: Problem sending zip file.' });
+	}
 };
 
+/**
+ * GET /photos/info/:id
+ * Gets DB info for a photo by given ID and returns it
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.getPhotoInfo = (req, res) => {
 	if (req.params.hasOwnProperty('id') && req.params.id) {
 		const id = req.params.id;
@@ -42,6 +59,13 @@ module.exports.getPhotoInfo = (req, res) => {
 	}
 };
 
+/**
+ * POST /photos/tag
+ * Takes tag string, searches tags of all photos, and returns array of photos
+ * req.body.tag
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.getPhotoByTag = (req, res) => {
 	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
 		if (err) {
@@ -50,10 +74,14 @@ module.exports.getPhotoByTag = (req, res) => {
 		} else {
 			if (req.body.tag) {
 				try {
-					const filter = req.body.tag.toLowerCase();
+					const filterTag = req.body.tag.toLowerCase();
 					const filtered = photos.filter((p) => {
 						if (p.tags && p.tags.length) {
-							return p.tags.indexOf(filter) >= 0;
+							return (
+								p.tags.filter((t) => {
+									return t.indexOf(filterTag) >= 0;
+								}).length > 0
+							);
 						}
 					});
 					res.status(200).json(filtered);
@@ -68,6 +96,13 @@ module.exports.getPhotoByTag = (req, res) => {
 	});
 };
 
+/**
+ * POST /photos/uploader/:id
+ * Takes uploader id and returns array of photos they have uploaded
+ * req.body.uploader
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.getPhotoByUploaderId = (req, res) => {
 	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
 		if (err) {
@@ -89,6 +124,13 @@ module.exports.getPhotoByUploaderId = (req, res) => {
 	});
 };
 
+/**
+ * POST /photos/uploader/name
+ * Takes uploader name and returns array of photos with uploader name that matches (could be more than 1 person if same name)
+ * req.body.uploader
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.getPhotoByUploaderName = (req, res) => {
 	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
 		if (err) {
@@ -100,7 +142,11 @@ module.exports.getPhotoByUploaderName = (req, res) => {
 					const filterText = req.body.uploader.toLowerCase();
 					const filtered = photos.filter((p) => {
 						if (p.uploadedBy && p.uploadedBy.firstName) {
-							return p.uploadedBy.firstName.indexOf(filterText) >= 0 || (p.uploadedBy.hasOwnProperty('lastName') && p.uploadedBy.lastName.indexOf(filterText) >= 0);
+							return (
+								p.uploadedBy.firstName.indexOf(filterText) >= 0 ||
+								(p.uploadedBy.hasOwnProperty('lastName') &&
+									p.uploadedBy.lastName.indexOf(filterText) >= 0)
+							);
 						}
 					});
 					res.status(200).json(filtered);
@@ -115,6 +161,13 @@ module.exports.getPhotoByUploaderName = (req, res) => {
 	});
 };
 
+/**
+ * POST /photos
+ * Uploads a photo, creates a thumbnail, strips geo exif data, saves info to DB, and returns info to caller
+ * req.file
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.uploadPhotos = (req, res) => {
 	// @TODO: consider making thumb creation and exif stripping async and mandatory for success
 	// no comments on upload just to make this simpler
@@ -124,11 +177,12 @@ module.exports.uploadPhotos = (req, res) => {
 		res.status(500).json({ error: 'upload not received', message: 'ERROR: Photo file not received!' });
 	} else {
 		try {
-			const promiseArr = [photoFix.removeExif, photoFix.createThumb];
+			const promiseArr = [ photoFix.removeExif, photoFix.createThumb ];
 			// remove geo tag data
-			bluebird.map(promiseArr, (step) => {
-				return step(req.file);
-			})
+			bluebird
+				.map(promiseArr, (step) => {
+					return step(req.file);
+				})
 				.then((result) => {
 					let photo = new Photo();
 					photo.fillDetails(result);
@@ -136,7 +190,7 @@ module.exports.uploadPhotos = (req, res) => {
 					photo.uploadedBy = req.payload._id;
 					photo.fileName = file.filename;
 					if (req.body.tags) {
-						// convert tags to lwoer case for easier use later
+						// convert tags to lower case for easier use later
 						photo.tags = req.body.tags.map((tag) => tag.toLowerCase());
 					} else {
 						photo.tags = [];
@@ -155,7 +209,10 @@ module.exports.uploadPhotos = (req, res) => {
 				.catch((error) => {
 					console.log('error', error);
 					logger.logThis(error, req);
-					req.status(500).json({ error, message: 'ERROR: Something went wrong with either creating thumbnail or removing exif data.' });
+					req.status(500).json({
+						error,
+						message: 'ERROR: Something went wrong with either creating thumbnail or removing exif data.'
+					});
 				});
 		} catch (e) {
 			logger.logThis(e, req);
@@ -164,6 +221,13 @@ module.exports.uploadPhotos = (req, res) => {
 	}
 };
 
+/**
+ * DELETE /photos/:id
+ * Takes photo ID and deletes photo, thumbnail, and DB entry
+ * MUST BE ADMIN TO USE THIS
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.deletePhoto = (req, res) => {
 	// must be admin to hit this
 	if (req.payload && req.payload.admin) {
@@ -209,6 +273,13 @@ module.exports.deletePhoto = (req, res) => {
 	}
 };
 
+/**
+ * PATCH photos.tag/:id
+ * Takes photo ID in params and array of tags and sets photo tags to new array of tags
+ * req.body.tags (array of tags containing ALL tags so add or delete requests need to send entire array of new tags)
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.editTags = (req, res) => {
 	if (req.params.hasOwnProperty('id') && req.params.id) {
 		if (req.body.tags) {
@@ -240,6 +311,13 @@ module.exports.editTags = (req, res) => {
 	}
 };
 
+/**
+ * PATCH /photos/comment/:id
+ * Takes photo ID param and comment string and adds the comment to the photo's comment array
+ * req.body.comment
+ * @param {*} req 
+ * @param {*} res 
+ */
 module.exports.editComments = (req, res) => {
 	if (req.params.hasOwnProperty('id') && req.params.id) {
 		if (req.body.comment && req.body.comment.length) {

@@ -4,6 +4,8 @@ const common = require('./common');
 describe('Admin', function() {
 	let user;
 	let headers;
+	let admin;
+	let adminHeaders;
 	beforeAll((done) => {
 		global
 			.login()
@@ -12,14 +14,30 @@ describe('Admin', function() {
 				headers = {
 					Authorization: `Bearer ${user.token}`
 				};
-				done();
+				global
+					.adminLogin()
+					.then((res) => {
+						admin = res.data;
+						adminHeaders = {
+							Authorization: `Bearer ${admin.token}`
+						};
+						done();
+					})
+					.catch((error) => {
+						console.error('Admin beforeAll admin promise rejected', error);
+					});
 			})
 			.catch((err) => {
-				console.error('Admin beforeAll promise rejected', err);
+				console.error('Admin beforeAll user promise rejected', err);
 			});
 	});
 
 	it('get#admin/listusers should fail when request not made from admin', function() {
-		return frisby.get(`${common.baseUrl}admin/listusers`).expect('status', 401);
+		return frisby
+			.fetch(`${common.baseUrl}admin/listusers`, {
+				method: 'GET',
+				headers
+			})
+			.expect('status', 403);
 	});
 });

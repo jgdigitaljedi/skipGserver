@@ -37,7 +37,7 @@ app.use(passport.initialize());
 app.use('/api', routesApi);
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
+app.use((req, res) => {
 	const err = new Error('Not Found');
 	err.status = 404;
 	next(err);
@@ -46,7 +46,7 @@ app.use((req, res, next) => {
 // error handlers
 
 // [SH] Catch unauthorised errors
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
 	if (err.name === 'UnauthorizedError') {
 		res.status(401);
 		res.json({ message: err.name + ': ' + err.message });
@@ -56,7 +56,7 @@ app.use((err, req, res, next) => {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-	app.use((err, req, res, next) => {
+	app.use((err, req, res) => {
 		res.status(err.status || 500);
 		res.render('error', {
 			message: err.message,
@@ -67,7 +67,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
 	res.status(err.status || 500);
 	res.render('error', {
 		message: err.message,

@@ -47,7 +47,7 @@ logger.logInfo = (operation) => {
 };
 
 logger.logWarning = (warning) => {
-	logger.warn(warning)
+	logger.warn(warning);
 };
 
 module.exports = logger;
