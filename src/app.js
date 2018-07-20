@@ -19,8 +19,6 @@ const routesApi = require('./api/routes/index');
 
 const app = express();
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
 // app.use(morgan('dev'));
 app.use(morgan('combined', { stream: winston.stream }));
 app.use(bodyParser.json());
