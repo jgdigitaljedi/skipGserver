@@ -88,7 +88,7 @@ module.exports.login = function (req, res) {
 /**
  * DELETE /users
  * Deletes a user from the system
- * req.body.password, req.body.email
+ * req.body.password, req.body.email (for extra security they must send creds again)
  * @param {*} req 
  * @param {*} res 
  */
@@ -109,6 +109,33 @@ module.exports.deleteMe = function (req, res) {
 					}
 				});
 			}
+		}
+	});
+};
+
+/**
+ * POST /users/reset
+ * Resets user password
+ * req.body.newpass
+ * @param {*} req 
+ * @param {*} res 
+ */
+module.exports.resetPassword = function (req, res) {
+	User.findById(req.payload._id, (error, user) => {
+		if (error) {
+			logger.logThis(error, req);
+			res.status(500).json({ error, message: 'ERROR: Problem fetching user data to change password.' });
+		} else {
+			user.setPassword(req.body.newpass);
+			user.profileUpdated();
+			user.save((err) => {
+				if (err) {
+					logger.logThis(err, req);
+					res.status(500).json({ error: err, message: 'ERROR: Problem changing password.' });
+				} else {
+					res.status(200).json({ error: false, message: 'Password change was successful!' });
+				}
+			});
 		}
 	});
 };

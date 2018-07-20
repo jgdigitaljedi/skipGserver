@@ -7,9 +7,8 @@ const auth = jwt({
   userProperty: 'payload'
 });
 
-// @TODO: write reset password endpoint
 // @TODO: write forgot password endpoint
-// @TODO: write delete account password endpoint
+// @TODO: bring in email service and use for forgot password (send link to reset) and reset password (confirmation email)
 
 /**
  * @api {post} /api/users/register Register new user
@@ -68,6 +67,8 @@ router.post('/login', ctrlAuth.login);
  *    {error: <system error message>, message: 'ERROR: Problem logging in.'}
  */
 router.delete('/', auth, ctrlAuth.deleteMe);
+
+router.post('/reset', auth, ctrlAuth.resetPassword);
 
 /**
  * @api {post} /api/users/devuser Test password and token creation

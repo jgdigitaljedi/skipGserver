@@ -31,7 +31,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"test@test.com\",\n  \"password\": \"test\"\n}"
+							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"test\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/profile",
@@ -70,7 +70,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"tester@terster.net\"\n}"
+							"raw": "{\n\t\"email\": \"tester@terster.net\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/profile",
@@ -118,8 +118,7 @@
 							"formdata": [
 								{
 									"key": "photo",
-									"type": "file",
-									"value": ""
+									"type": "file"
 								},
 								{
 									"key": "tags[0]",
@@ -170,7 +169,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"tag\": \"test\"\n}"
+							"raw": "{\n\t\"tag\": \"test\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/photos/tag",
@@ -210,7 +209,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"uploader\": \"\"\n}"
+							"raw": "{\n\t\"uploader\": \"\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/photos/uploader/id",
@@ -287,7 +286,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"_id\": \"5b474c7c36360f1799282927\"\n}"
+							"raw": "{\n\t\"_id\": \"5b474c7c36360f1799282927\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/photos",
@@ -326,7 +325,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"uploader\": \"admin\"\n}"
+							"raw": "{\n\t\"uploader\": \"admin\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/photos/uploader/name",
@@ -367,7 +366,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"tags\": [\n    \"pool\",\n    \"mere mere\",\n    \"backyard\"\n  ]\n}"
+							"raw": "{\n\t\"tags\": [\n\t\t\"pool\",\n\t\t\"mere mere\",\n\t\t\"backyard\"\n\t]\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/photos/tag/11",
@@ -443,7 +442,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"comment\": \"This is a comment. This is a comment on drugs. Any Questions?\"\n}"
+							"raw": "{\n\t\"comment\": \"This is a comment. This is a comment on drugs. Any Questions?\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/photos/comment/11",
@@ -490,7 +489,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"test@test.com\",\n  \"password\": \"test\"\n}"
+							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"test\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/admin/listusers",
@@ -530,7 +529,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"_id\": \"5b423c3240fcb86e3bd25f99\"\n}"
+							"raw": "{\n\t\"_id\": \"5b423c3240fcb86e3bd25f99\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/admin/deleteuser",
@@ -566,7 +565,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"test@test.com\",\n  \"name\": \"Tester McTesterson\",\n  \"password\": \"test\"\n}"
+							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"name\": \"Tester McTesterson\",\n\t\"password\": \"test\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/user/register",
@@ -585,6 +584,36 @@
 					"response": []
 				},
 				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "devUser",
 					"request": {
 						"method": "POST",
@@ -596,7 +625,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"admin@admin.com\",\n  \"password\": \"admin\",\n  \"name\": \"admin\"\n}"
+							"raw": "{\n\t\"email\": \"admin@admin.com\",\n\t\"password\": \"admin\",\n\t\"name\": \"admin\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/user/devuser",
@@ -615,8 +644,57 @@
 					"response": []
 				},
 				{
-					"name": "login",
+					"name": "deleteUser",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUwOThhNGY3Y2FhYzI0NzcwNGE1MGUiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJmaXJzdE5hbWUiOiJUZXN0ZXIiLCJsYXN0TmFtZSI6Ik1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzI2OTM4MzYsImlhdCI6MTUzMjA4OTAzNn0.CjoDQG1XfDgwlWB_au1bdZQyv8xQKC0H4lbSXDe38qw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"test\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resetPassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkN2YiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJmaXJzdE5hbWUiOiJUZXN0ZXIiLCJsYXN0TmFtZSI6Ik1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzI2OTY0MzMsImlhdCI6MTUzMjA5MTYzM30.QkEsPj6lWkKJKPRCu3nvWE6b_F1MPfHe2NIsndbEVn0",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [
 							{
@@ -626,10 +704,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"test@test.com\",\n  \"password\": \"test\"\n}"
+							"raw": "{\n\t\"newpass\": \"tester\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/user/login",
+							"raw": "http://localhost:3000/api/user/reset",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -638,7 +716,7 @@
 							"path": [
 								"api",
 								"user",
-								"login"
+								"reset"
 							]
 						}
 					},
