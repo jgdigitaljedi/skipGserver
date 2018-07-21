@@ -22,28 +22,35 @@ const userSchema = new mongoose.Schema({
 	hash: String,
 	salt: String,
 	joinDate: String,
-	lastUpdated: String
+	lastUpdated: String,
+	resetToken: String,
+	resetTokenExpires: String
 });
 
-userSchema.methods.setPassword = function (password) {
+userSchema.methods.generateResetToken = function() {
+	this.resetToken = crypto.randomBytes(20).toString('hex');
+	this.resetTokenExpires = moment().add(2, 'hours');
+};
+
+userSchema.methods.setPassword = function(password) {
 	this.salt = crypto.randomBytes(16).toString('hex');
 	this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
 };
 
-userSchema.methods.validPassword = function (password) {
+userSchema.methods.validPassword = function(password) {
 	var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
 	return this.hash === hash;
 };
 
-userSchema.methods.joinDateAdd = function () {
+userSchema.methods.joinDateAdd = function() {
 	this.joinDate = moment().format(common.dateFormat);
 };
 
-userSchema.methods.profileUpdated = function () {
+userSchema.methods.profileUpdated = function() {
 	this.lastUpdated = moment().format(common.dateFormat);
 };
 
-userSchema.methods.generateJwt = function () {
+userSchema.methods.generateJwt = function() {
 	var expiry = new Date();
 	expiry.setDate(expiry.getDate() + 7);
 

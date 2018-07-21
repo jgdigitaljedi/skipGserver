@@ -11,7 +11,7 @@ const crypto = require('crypto');
  * @param {*} req 
  * @param {*} res 
  */
-module.exports.register = function (req, res) {
+module.exports.register = function(req, res) {
 	const user = new User();
 
 	user.firstName = req.body.firstName;
@@ -23,7 +23,7 @@ module.exports.register = function (req, res) {
 
 	user.setPassword(req.body.password);
 
-	user.save(function (err) {
+	user.save(function(err) {
 		if (err) {
 			logger.logThis(err, req);
 			res.status(500).json({ error: err, message: 'ERROR: Problem saving new user to DB.' });
@@ -50,7 +50,7 @@ module.exports.register = function (req, res) {
  * @param {*} req 
  * @param {*} res 
  */
-module.exports.login = function (req, res) {
+module.exports.login = function(req, res) {
 	passport.authenticate('local', (err, user, info) => {
 		let token;
 
@@ -92,14 +92,14 @@ module.exports.login = function (req, res) {
  * @param {*} req 
  * @param {*} res 
  */
-module.exports.deleteMe = function (req, res) {
+module.exports.deleteMe = function(req, res) {
 	User.findById(req.payload._id, (error, user) => {
 		if (error) {
 			logger.logThis(error, req);
 			res.status(500).json({ error, message: 'ERROR: Problem fetching user info to delete.' });
 		} else {
 			const sentPwHas = crypto.pbkdf2Sync(req.body.password, user.salt, 1000, 64, 'sha512').toString('hex');
-			if ((req.body.email === user.email) && (sentPwHas === user.hash)) {
+			if (req.body.email === user.email && sentPwHas === user.hash) {
 				user.remove((err) => {
 					if (err) {
 						logger.logThis(err, req);
@@ -114,13 +114,13 @@ module.exports.deleteMe = function (req, res) {
 };
 
 /**
- * POST /users/reset
+ * POST /users/changepw
  * Resets user password
  * req.body.newpass
  * @param {*} req 
  * @param {*} res 
  */
-module.exports.resetPassword = function (req, res) {
+module.exports.changePassword = function(req, res) {
 	User.findById(req.payload._id, (error, user) => {
 		if (error) {
 			logger.logThis(error, req);
@@ -141,13 +141,43 @@ module.exports.resetPassword = function (req, res) {
 };
 
 /**
+ * POST /users/reset
+ * Route that generate rest token and expiration, saves to DB, and sends link to user
+ * req.body.email
+ * @param {*} req 
+ * @param {*} res 
+ */
+module.exports.resetPasswordLink = function(req, res) {
+	// @TODO: pick an email service and finish this
+	// generates reset password good for 2 hours and emails link to user
+	if (req.body.email) {
+		try {
+			User.find({ email: req.body.email }, (error, user) => {
+				if (error) {
+					logger.logThis(error, req);
+					res.status(500).json({ error, message: 'ERROR: Problem finding user by email.' });
+				} else {
+					user.generateResetToken();
+					// this is where the email part needs to happen
+				}
+			});
+		} catch (e) {
+			logger.logThis(e, req);
+			res.status(500).json({ error: e, message: 'ERROR: Problem getting user or sending reset email.' });
+		}
+	} else {
+		res.status().json({ error: true, message: 'YOU MUST ENTER YOUR EMAIL ADDRESS TO GET A PASSWORD REST LINK!' });
+	}
+};
+
+/**
  * POST /users/devuser
  * Dev only endpoint to get register response without registering to DB
  * req.body.email, req.body.firstName, req.body.lastName?, req.body.password
  * @param {*} req 
  * @param {*} res 
  */
-module.exports.devUser = function (req, res) {
+module.exports.devUser = function(req, res) {
 	const env = process.env.NODE_ENV || 'development';
 	if (env === 'production') {
 		res.status(401).json({ message: 'This is only available in development for testing purposes.' });

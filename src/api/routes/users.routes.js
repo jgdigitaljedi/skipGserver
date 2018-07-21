@@ -3,8 +3,8 @@ const router = express.Router();
 const ctrlAuth = require('../controllers/user.controller');
 const jwt = require('express-jwt');
 const auth = jwt({
-  secret: process.env.SKIPGSECRET,
-  userProperty: 'payload'
+	secret: process.env.SKIPGSECRET,
+	userProperty: 'payload'
 });
 
 // @TODO: write forgot password endpoint
@@ -68,7 +68,9 @@ router.post('/login', ctrlAuth.login);
  */
 router.delete('/', auth, ctrlAuth.deleteMe);
 
-router.post('/reset', auth, ctrlAuth.resetPassword);
+router.post('/changepw', auth, ctrlAuth.changePassword);
+
+router.post('/reset', ctrlAuth.resetPasswordLink);
 
 /**
  * @api {post} /api/users/devuser Test password and token creation
