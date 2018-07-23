@@ -3,6 +3,8 @@ const mongoose = require('mongoose');
 const User = mongoose.model('User');
 const logger = require('../config/winston');
 const crypto = require('crypto');
+const Email = require('../config/email');
+const moment = require('moment');
 
 /**
  * POST /users/register
@@ -11,7 +13,7 @@ const crypto = require('crypto');
  * @param {*} req 
  * @param {*} res 
  */
-module.exports.register = function(req, res) {
+module.exports.register = function (req, res) {
 	const user = new User();
 
 	user.firstName = req.body.firstName;
@@ -23,7 +25,7 @@ module.exports.register = function(req, res) {
 
 	user.setPassword(req.body.password);
 
-	user.save(function(err) {
+	user.save(function (err) {
 		if (err) {
 			logger.logThis(err, req);
 			res.status(500).json({ error: err, message: 'ERROR: Problem saving new user to DB.' });
@@ -50,7 +52,7 @@ module.exports.register = function(req, res) {
  * @param {*} req 
  * @param {*} res 
  */
-module.exports.login = function(req, res) {
+module.exports.login = function (req, res) {
 	passport.authenticate('local', (err, user, info) => {
 		let token;
 
@@ -92,7 +94,7 @@ module.exports.login = function(req, res) {
  * @param {*} req 
  * @param {*} res 
  */
-module.exports.deleteMe = function(req, res) {
+module.exports.deleteMe = function (req, res) {
 	User.findById(req.payload._id, (error, user) => {
 		if (error) {
 			logger.logThis(error, req);
@@ -120,7 +122,7 @@ module.exports.deleteMe = function(req, res) {
  * @param {*} req 
  * @param {*} res 
  */
-module.exports.changePassword = function(req, res) {
+module.exports.changePassword = function (req, res) {
 	User.findById(req.payload._id, (error, user) => {
 		if (error) {
 			logger.logThis(error, req);
@@ -147,18 +149,33 @@ module.exports.changePassword = function(req, res) {
  * @param {*} req 
  * @param {*} res 
  */
-module.exports.resetPasswordLink = function(req, res) {
+module.exports.resetPasswordLink = function (req, res) {
 	// @TODO: pick an email service and finish this
 	// generates reset password good for 2 hours and emails link to user
 	if (req.body.email) {
 		try {
-			User.find({ email: req.body.email }, (error, user) => {
+			User.findOne({ email: req.body.email }, (error, user) => {
 				if (error) {
 					logger.logThis(error, req);
 					res.status(500).json({ error, message: 'ERROR: Problem finding user by email.' });
 				} else {
-					user.generateResetToken();
-					// this is where the email part needs to happen
+					user.resetToken = crypto.randomBytes(20).toString('hex');
+					user.resetTokenExpires = moment().add(2, 'hours');
+					user.save((err) => {
+						if (err) {
+							logger.logThis(err, req);
+							res.status(500).json({ error: err, message: 'ERROR: Problem saving reset token for user.' });
+						} else {
+							Email.sendEmail(user.email, { first: user.firstName, last: user.lastName }, user.resetToken)
+								.then(() => {
+									res.status(200).json({ error: false, message: 'Password reset link has been sent via email.' });
+								})
+								.catch((err) => {
+									logger.logThis(err, req);
+									res.status(500).json({ error: err, message: 'ERROR: Problem sending password reset email.' });
+								});
+						}
+					});
 				}
 			});
 		} catch (e) {
@@ -177,7 +194,7 @@ module.exports.resetPasswordLink = function(req, res) {
  * @param {*} req 
  * @param {*} res 
  */
-module.exports.devUser = function(req, res) {
+module.exports.devUser = function (req, res) {
 	const env = process.env.NODE_ENV || 'development';
 	if (env === 'production') {
 		res.status(401).json({ message: 'This is only available in development for testing purposes.' });

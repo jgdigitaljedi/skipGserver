@@ -52,6 +52,7 @@
 		"passport": "^0.4.0",
 		"passport-local": "^1.0.0",
 		"sharp": "^0.20.5",
+		"sparkpost": "^2.1.2",
 		"winston": "^3.0.0"
 	},
 	"devDependencies": {
