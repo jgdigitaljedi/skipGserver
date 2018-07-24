@@ -2,6 +2,7 @@ const multer = require('multer');
 const common = require('../../../common');
 const moment = require('moment');
 const path = require('path');
+const chalk = require('chalk');
 
 const storage = multer.diskStorage({
 	destination: (req, file, cb) => {
@@ -10,14 +11,14 @@ const storage = multer.diskStorage({
 	},
 	fileFilter: (req, file, cb) => {
 		if (!file) {
-			console.error('no file');
+			console.log(chalk.red('no file'));
 			cb();
 		}
 		const image = file.mimetype.startsWith('image/');
 		if (image) {
 			cb(null, true);
 		} else {
-			console.error('no image');
+			console.log(chalk.red('no image'));
 			return cb();
 		}
 	},
