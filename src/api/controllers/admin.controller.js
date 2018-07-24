@@ -32,7 +32,7 @@ module.exports.listUsers = function (req, res) {
 							admin: item.admin
 						};
 					});
-					res.status(200).json(usersCleaned);
+					res.status(200).json({ error: false, users: usersCleaned });
 				} catch (e) {
 					logger.logThis(e, req);
 					res
@@ -62,11 +62,34 @@ module.exports.deleteUser = function (req, res) {
 				logger.logThis(err, req);
 				res.status(500).json({ error: err, message: 'ERROR: Something went wrong with deleting the user.' });
 			} else {
-				// @TODO: write this
-				res.status(200).json(result);
+				res.status(200).json({ error: false, user: result });
 			}
 		});
 	} else {
+		logger.logThis('non-admin user trying to do admin things', req);
+		res.status(403).json({ error: true, message: 'UNAUTHORIZED: Access Denied! You must be an admin to do this.' });
+	}
+};
+
+/**
+ * POST /admin/useractive
+ * Changes user active status in DB
+ * req.body._id, req.body.active
+ * @param {*} req 
+ * @param {*} res 
+ */
+module.exports.changeUserActive = function (req, res) {
+	if (req.payload.admin) {
+		User.findOneAndUpdate({ _id: req.body._id }, { $set: { active: req.body.active } }, { new: true }, (error, user) => {
+			if (error) {
+				logger.logThis(error, req);
+				res.status(500).json({ error, message: 'ERROR: Problem updating user active property.' });
+			} else {
+				res.status(200).json({ error: false, user });
+			}
+		});
+	} else {
+		logger.logThis('non-admin user trying to do admin things', req);
 		res.status(403).json({ error: true, message: 'UNAUTHORIZED: Access Denied! You must be an admin to do this.' });
 	}
 };

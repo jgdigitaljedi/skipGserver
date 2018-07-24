@@ -30,6 +30,7 @@ brew install exiftool
 ```
 git clone https://github.com/jgdigitaljedi/skipGserver
 npm i
+npm i -g ndb (not required, but makes experience with Node debugging a lot better)
 ```
 ---
 ### Seed MongoDB ###

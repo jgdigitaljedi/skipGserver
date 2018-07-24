@@ -6,10 +6,11 @@ const path = require('path');
 const photoFix = require('../src/api/config/photos');
 const bluebird = require('bluebird');
 const archive = require('../src/api/config/archive');
+const chalk = require('chalk');
 
 function deleteAllInDirectory(photoPath) {
 	return new Promise((resolve, reject) => {
-		console.log('removing all from' + photoPath);
+		console.log(chalk.cyan('removing all from' + photoPath));
 		return fs.readdir(photoPath, (err, files) => {
 			if (err) {
 				reject(err);
@@ -33,12 +34,12 @@ function deleteAllInDirectory(photoPath) {
 }
 
 function deleteZip() {
-	console.log('deleting zip');
+	console.log(chalk.cyan('deleting zip'));
 	// delete zip file if one exists
 	fs.unlink(path.join(common.rootPath, 'public/Skipg.zip'), (err) => {
 		if (err) {
 			if (err.code === 'ENOENT') {
-				console.warn('No zip file to delete!');
+				console.log(chalk.yellow('No zip file to delete!'));
 			} else {
 				throw err;
 			}
@@ -47,7 +48,7 @@ function deleteZip() {
 }
 
 function copySeedPhoto() {
-	console.log('copying seed');
+	console.log(chalk.cyan('copying seed'));
 	return new Promise((resolve) => {
 		// copy seed photo to photos dir
 		const readStream = fs.createReadStream(path.join(common.rootPath, 'seed/seedPhoto.jpeg'));
@@ -60,8 +61,8 @@ function copySeedPhoto() {
 			throw err;
 		});
 
-		readStream.on('close', function() {
-			console.warn('SEED PHOTO COPIED!');
+		readStream.on('close', function () {
+			console.log(chalk.green('SEED PHOTO COPIED!'));
 			resolve();
 		});
 
@@ -71,8 +72,8 @@ function copySeedPhoto() {
 
 function transformPhotoAddToDb(user) {
 	// add transform photo and add to DB
-	const promiseArr = [ photoFix.removeExif, photoFix.createThumb ];
-	console.log('transforming seed photo and creating zip');
+	const promiseArr = [photoFix.removeExif, photoFix.createThumb];
+	console.log(chalk.cyan('transforming seed photo and creating zip'));
 	// // remove geo tag data
 	bluebird
 		.map(promiseArr, (step) => {
@@ -82,20 +83,20 @@ function transformPhotoAddToDb(user) {
 			});
 		})
 		.then((result) => {
-			console.log('saving seed photo to DB', result);
+			console.log(chalk.cyan('saving seed photo to DB', result));
 			let photo = new Photo();
 			photo.fillDetails(result);
 			photo.timestamp();
 			photo.uploadedBy = user._id;
 			photo.fileName = 'photo-seed--test.jpeg';
-			photo.tags = [ 'seed', 'test' ];
+			photo.tags = ['seed', 'test'];
 			photo.comments = [];
 			photo.save((err) => {
 				if (err) {
 					throw err;
 				} else {
 					archive.makeZip();
-					console.warn('DB SUCCESSFULLY CLEARED AND SEEDED!!');
+					console.log(chalk.green('DB SUCCESSFULLY CLEARED AND SEEDED!!'));
 					process.exit();
 				}
 			});
@@ -105,7 +106,7 @@ function transformPhotoAddToDb(user) {
 		});
 }
 
-module.exports.seedPhoto = function(user) {
+module.exports.seedPhoto = function (user) {
 	// remove all photos from DB
 	Photo.remove({}, (err) => {
 		if (err) {
@@ -119,7 +120,7 @@ module.exports.seedPhoto = function(user) {
 		const deleteThumbs = deleteAllInDirectory(thumbsPath);
 
 		bluebird
-			.map([ deletePhotos, deleteThumbs ], (step) => {
+			.map([deletePhotos, deleteThumbs], (step) => {
 				return step;
 			})
 			.then((result) => {
@@ -130,7 +131,7 @@ module.exports.seedPhoto = function(user) {
 				});
 			})
 			.catch((err) => {
-				console.error('something went wrong', err);
+				console.log(chalk.red('something went wrong', err));
 			});
 	});
 };
