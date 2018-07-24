@@ -6,7 +6,7 @@
 	"scripts": {
 		"test": "npm run lint && concurrently --kill-others \"NODE_ENV=development node src/server.js\" \"jest --verbose\"",
 		"start": "NODE_ENV=production node src/server.js",
-		"dev": "NODE_ENV=development nodemon --watch src src/server.js",
+		"dev": "NODE_ENV=development ndb nodemon --watch src src/server.js",
 		"docs": "apidoc -i src/api/routes/ -o docs/",
 		"seed": "node seed/seed.js",
 		"lint": "./node_modules/.bin/eslint --fix --ignore-path .eslintignore . src/api/"
@@ -15,15 +15,7 @@
 		"type": "git",
 		"url": "git+https://github.com/jgdigitaljedi/skipGserver.git"
 	},
-	"keywords": [
-		"node",
-		"express",
-		"mongo",
-		"jwt",
-		"passport",
-		"multer",
-		"apidoc"
-	],
+	"keywords": [ "node", "express", "mongo", "jwt", "passport", "multer", "apidoc" ],
 	"author": "Joey Gauthier",
 	"license": "ISC",
 	"bugs": {
