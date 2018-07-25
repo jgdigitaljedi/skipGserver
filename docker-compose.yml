@@ -1,0 +1,19 @@
+version: "2"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - SKIPGSECRET=${SKIPGSECRET}
+      - SPARKPOST_API_KEY=${SPARKPOST_API_KEY}
+      - NODE_ENV=${NODE_ENV}
+      - MYEMAIL=${MYEMAIL}
+    ports:
+    - "3000:3000"
+    depends_on:
+    - mongo
+  mongo:
+    image: mongo
+    ports:
+    - "27017:27017"

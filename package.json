@@ -15,7 +15,15 @@
 		"type": "git",
 		"url": "git+https://github.com/jgdigitaljedi/skipGserver.git"
 	},
-	"keywords": [ "node", "express", "mongo", "jwt", "passport", "multer", "apidoc" ],
+	"keywords": [
+		"node",
+		"express",
+		"mongo",
+		"jwt",
+		"passport",
+		"multer",
+		"apidoc"
+	],
 	"author": "Joey Gauthier",
 	"license": "ISC",
 	"bugs": {
