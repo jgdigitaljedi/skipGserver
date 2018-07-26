@@ -23,6 +23,7 @@ const auth = jwt({
  *    {name: "Test McTest", email: "test@test.com", password: "5g6a65867er5654f"}
  * @apiSuccessExample {json} Success response:
  *    {
+ * 			error: false,
  *      token: "n9iuas0dfg8uq348tuhas0d8f7ha38475hb0a8s7dfq8374th8a",
  *      admin: false
  *    }
@@ -68,8 +69,38 @@ router.post('/login', ctrlAuth.login);
  */
 router.delete('/', auth, ctrlAuth.deleteMe);
 
+/**
+ * @api {post} /api/users/changpw Change user password
+ * @apiGroup Users
+ * @apiName ChangePassword
+ * 
+ * @apiDescription Endpoint for logged in user to change their password.
+ * @apiExample {json} Example request body:
+ *    {email: "test@test.com", newpass: "mynewpassword"}
+ * @apiSuccessExample {json} Success response:
+ *    {
+ *      {error: false, message: "Password change was successful!"}
+ *    }
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Problem changing password.'}
+ */
 router.post('/changepw', auth, ctrlAuth.changePassword);
 
+/**
+ * @api {post} /api/users/reset Get forgot password link emailed
+ * @apiGroup Users
+ * @apiName ResetPasswordLink
+ * 
+ * @apiDescription Endpoint that emails a user a link if they forgot their password.
+ * @apiExample {json} Example request body:
+ *    {email: "test@test.com"}
+ * @apiSuccessExample {json} Success response:
+ *    {
+ *      {error: false, message: "Password reset link has been sent via email."}
+ *    }
+ * @apiErrorExample {json} Error response:
+ *    {error: <system error message>, message: 'ERROR: Problem sending password reset email.'}
+ */
 router.post('/reset', ctrlAuth.resetPasswordLink);
 
 /**
@@ -85,6 +116,7 @@ router.post('/reset', ctrlAuth.resetPasswordLink);
  *    {name: "Test McTest", email: "test@test.com", password: "5g6a65867er5654f"}
  * @apiSuccessExample {json} Success response:
  *    {
+ * 			error: false,
  *      token: "n9iuas0dfg8uq348tuhas0d8f7ha38475hb0a8s7dfq8374th8a",
  *      user: {
  *        _id: "8723459872354",

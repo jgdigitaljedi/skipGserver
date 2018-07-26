@@ -17,7 +17,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyM2MzMjQwZmNiODZlM2JkMjVmOTkiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiZXhwIjoxNTMxNjgwNTQyLCJpYXQiOjE1MzEwNzU3NDJ9.7jT_lnPYtncfoZGkrS4cBqW9wDuzkz6ow5CxqnQmpZ4",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkN2YiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJmaXJzdE5hbWUiOiJUZXN0ZXIiLCJsYXN0TmFtZSI6Ik1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzMyMTI5MjIsImlhdCI6MTUzMjYwODEyMn0.U1TaB_mBIkRAGHj3QcGB295BRGuyjvnCzBasr0BDTBw",
 									"type": "string"
 								}
 							]
@@ -56,7 +56,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyM2MzMjQwZmNiODZlM2JkMjVmOTkiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIEJybyIsImFkbWluIjpmYWxzZSwiZXhwIjoxNTMxNjg2NzQyLCJpYXQiOjE1MzEwODE5NDJ9.R_KejX6eaftqQkyIXUaLEKsMyCQQASHFuTsm2jxrxAc",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkN2YiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJmaXJzdE5hbWUiOiJUZXN0ZXIiLCJsYXN0TmFtZSI6Ik1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzMyMTI5MjIsImlhdCI6MTUzMjYwODEyMn0.U1TaB_mBIkRAGHj3QcGB295BRGuyjvnCzBasr0BDTBw",
 									"type": "string"
 								}
 							]
@@ -101,7 +101,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQ1ZmRlYjJjNTAxMDBmMzA1MzAzZmUiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzIwMDE5OTMsImlhdCI6MTUzMTM5NzE5M30.R--9OofBo1yPi6H14Z9EFaOdWg2w78gFC05vUcUXa70",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkN2YiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJmaXJzdE5hbWUiOiJUZXN0ZXIiLCJsYXN0TmFtZSI6Ik1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzMyMTI5MjIsImlhdCI6MTUzMjYwODEyMn0.U1TaB_mBIkRAGHj3QcGB295BRGuyjvnCzBasr0BDTBw",
 									"type": "string"
 								}
 							]
@@ -460,6 +460,63 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "downloadAll",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkN2YiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJmaXJzdE5hbWUiOiJUZXN0ZXIiLCJsYXN0TmFtZSI6Ik1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzMyMTI5MjIsImlhdCI6MTUzMjYwODEyMn0.U1TaB_mBIkRAGHj3QcGB295BRGuyjvnCzBasr0BDTBw",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "photo",
+									"type": "file",
+									"value": ""
+								},
+								{
+									"key": "tags[0]",
+									"value": "test",
+									"type": "text"
+								},
+								{
+									"key": "tags[1]",
+									"value": "more testing",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/photos/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"photos",
+								"all"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -717,6 +774,46 @@
 								"api",
 								"user",
 								"reset"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changePassword",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkN2YiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJmaXJzdE5hbWUiOiJUZXN0ZXIiLCJsYXN0TmFtZSI6Ik1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzI2OTY0MzMsImlhdCI6MTUzMjA5MTYzM30.QkEsPj6lWkKJKPRCu3nvWE6b_F1MPfHe2NIsndbEVn0",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"newpass\": \"tester\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/user/changepw",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"user",
+								"changepw"
 							]
 						}
 					},

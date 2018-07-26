@@ -45,12 +45,12 @@ module.exports.downloadAll = (req, res) => {
 module.exports.getPhotoInfo = (req, res) => {
 	if (req.params.hasOwnProperty('id') && req.params.id) {
 		const id = req.params.id;
-		Photo.findById(id).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photo) => {
+		Photo.findById(id).populate('uploadedBy', '-_id -salt -hash -admin -resetToken -resetTokenExpires').exec((err, photo) => {
 			if (err) {
 				logger.logThis(err, req);
 				res.status(500).json({ error: err, message: 'ERROR: Error fetching photo info!' });
 			} else {
-				res.status(200).json(photo);
+				res.status(200).json({ error: false, photo: photo });
 			}
 		});
 	} else {
@@ -84,7 +84,7 @@ module.exports.getPhotoByTag = (req, res) => {
 							);
 						}
 					});
-					res.status(200).json(filtered);
+					res.status(200).json({ error: false, photos: filtered });
 				} catch (e) {
 					logger.logThis(e, req);
 					res.status(500).json({ error: e, message: 'ERROR: Problem parsing photos data.' });
@@ -112,7 +112,7 @@ module.exports.getPhotoByUploaderId = (req, res) => {
 			if (req.body.uploader) {
 				try {
 					const filtered = photos.filter((p) => p.uploadedBy === req.body.uploader);
-					res.status(200).json(filtered);
+					res.status(200).json({ error: false, photos: filtered });
 				} catch (e) {
 					logger.logThis(e, req);
 					res.status(500).json({ error: e, message: 'ERROR: Problem parsing photos by uploader id.' });
@@ -149,7 +149,7 @@ module.exports.getPhotoByUploaderName = (req, res) => {
 							);
 						}
 					});
-					res.status(200).json(filtered);
+					res.status(200).json({ error: false, photos: filtered });
 				} catch (e) {
 					logger.logThis(e, req);
 					res.status(500).json({ error: e, message: 'ERROR: Problem parsing photos by uploader name.' });
@@ -201,7 +201,7 @@ module.exports.uploadPhotos = (req, res) => {
 							res.status(500).json({ error: err, message: 'ERROR: Problem saving photo.' });
 						} else {
 							archive.makeZip();
-							res.status(200).json(photo);
+							res.status(200).json({ error: false, photo: photo });
 						}
 					});
 				})
@@ -250,7 +250,7 @@ module.exports.deletePhoto = (req, res) => {
 								// delete thumb
 								deleteFile(thumbPath)
 									.then(() => {
-										res.status(200).json(photo);
+										res.status(200).json({ error: false, photo: photo });
 									})
 									.catch((e) => {
 										logger.logThis(e, req);
@@ -295,7 +295,7 @@ module.exports.editTags = (req, res) => {
 								.status(500)
 								.json({ error: err, message: 'ERROR: Problem fetching photo from DB to edit tags.' });
 						} else {
-							res.status(200).json(photo);
+							res.status(200).json({ error: false, photo });
 						}
 					}
 				);
@@ -336,7 +336,7 @@ module.exports.editComments = (req, res) => {
 								logger.logThis(er, req);
 								res.status(500).json({ error: er, message: 'ERROR: Problem saving comment.' });
 							} else {
-								res.status(200).json(photo);
+								res.status(200).json({ error: false, photo });
 							}
 						});
 					}

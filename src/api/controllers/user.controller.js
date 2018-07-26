@@ -34,6 +34,7 @@ module.exports.register = function (req, res) {
 			token = user.generateJwt();
 			res.status(200);
 			res.json({
+				error: false,
 				token: token,
 				admin: false,
 				joinDate: user.joinDate,
@@ -69,6 +70,7 @@ module.exports.login = function (req, res) {
 				token = user.generateJwt();
 				res.status(200);
 				res.json({
+					error: false,
 					token: token,
 					admin: user.admin,
 					joinDate: user.joinDate,
@@ -118,7 +120,7 @@ module.exports.deleteMe = function (req, res) {
 /**
  * POST /users/changepw
  * Resets user password
- * req.body.newpass
+ * req.body.newpass, req.body.email
  * @param {*} req 
  * @param {*} res 
  */
@@ -128,16 +130,20 @@ module.exports.changePassword = function (req, res) {
 			logger.logThis(error, req);
 			res.status(500).json({ error, message: 'ERROR: Problem fetching user data to change password.' });
 		} else {
-			user.setPassword(req.body.newpass);
-			user.profileUpdated();
-			user.save((err) => {
-				if (err) {
-					logger.logThis(err, req);
-					res.status(500).json({ error: err, message: 'ERROR: Problem changing password.' });
-				} else {
-					res.status(200).json({ error: false, message: 'Password change was successful!' });
-				}
-			});
+			if (req.body.email === user.email) {
+				user.setPassword(req.body.newpass);
+				user.profileUpdated();
+				user.save((err) => {
+					if (err) {
+						logger.logThis(err, req);
+						res.status(500).json({ error: err, message: 'ERROR: Problem changing password.' });
+					} else {
+						res.status(200).json({ error: false, message: 'Password change was successful!' });
+					}
+				});
+			} else {
+				res.status(403).json({ error: true, message: 'ERROR: You must send email address you signed up with for security reasons.' });
+			}
 		}
 	});
 };
@@ -211,6 +217,6 @@ module.exports.devUser = function (req, res) {
 		user.setPassword(req.body.password);
 		let token;
 		token = user.generateJwt();
-		res.status(200).json({ token: token, user: user });
+		res.status(200).json({ error: false, token: token, user: user });
 	}
 };

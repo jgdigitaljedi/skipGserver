@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ctrlProfile = require('../controllers/profile.controller');
 
-// @TODO: write view profile endpoint (should get all uploads and comments as well as return user info)
+// @TODO: write view get all comments and tags for display in profile page
 
 /**
  * @api {get} /api/profile Get user profile
@@ -11,13 +11,15 @@ const ctrlProfile = require('../controllers/profile.controller');
  * 
  * @apiDescription Gets user profile information from DB; Uses user ID from JWT
  * @apiSuccessExample {json} Success response:
- *    [
  *      {
- *        name: "Text McText",
+ *        error: false,
+ *        firstName: "Test",
+ *        lastName: "McTest",
+ *        joinDate: "07/11/2018 12:45 am",
+ *        lastUpdated: "07/25/2018 02:51 pm",
  *        email: "test@test.com",
  *        admin: false
  *      }
- *    ]
  * @apiErrorExample {json} Error response:
  *    {error: <system error message>, message: 'ERROR: Error fetching user profile.'}
  */
@@ -32,18 +34,18 @@ router.get('/', ctrlProfile.profileRead);
  * @apiExample {json} Example request body:
  *    {name: "Tester McTest"}
  * @apiSuccessExample {json} Success response:
- *    [
- *      {
- *        name: "Text McText",
+ *    {
+ *        error: false,
+ *        firstName: "Test",
+ *        lastName: "McTest",
+ *        joinDate: "07/11/2018 12:45 am",
+ *        lastUpdated: "07/25/2018 02:51 pm",
  *        email: "test@test.com",
  *        admin: false
  *      }
- *    ]
  * @apiErrorExample {json} Error response:
  *    {error: <system error message>, message: 'ERROR: Error updating user data.'}
  */
 router.patch('/', ctrlProfile.profileUpdate);
-
-// @TODO: write change password
 
 module.exports = router;

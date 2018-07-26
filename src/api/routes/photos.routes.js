@@ -11,17 +11,22 @@ const uploadMw = require('../config/upload');
  * @apiParam {Number} id photoId
  * @apiDescription Gets info about photo from id
  * @apiSuccessExample {json} Success response:
- *    {
+ *  {
+ *    error: false,
+ *    photo: {
  *      tags: [],
  *      comments: [],
  *      _id: "9823745982374598237458",
  *      uploadedBy: {
  *        email: "test@test.com",
- *        name: "Tester"
+ *        firstName: "Tester",
+ *        lastName: "McTest"
  *      },
  *      uploadDate: "07/11/2018 11:30 am",
  *      __v: 0
  *    }
+ *  }
+ *    
  * @apiErrorExample {json} Error response:
  *    {error: <system error message>, message: 'ERROR: Error fetching photo info!'}
  */
@@ -37,15 +42,19 @@ router.get('/info/:id', ctrlPhotos.getPhotoInfo);
  * @apiDescription Uploads a photo, strips exif metadata, creates 300px wide thumb, and save info to DB
  * @apiSuccessExample {json} Success response:
  *    {
- *      tags: [],
- *      comments: [],
- *      _id: "9823745982374598237458",
- *      uploadedBy: {
- *        email: "test@test.com",
- *        name: "Tester"
- *      },
- *      uploadDate: "07/11/2018 11:30 am",
- *      __v: 0
+ *      error: false,
+ *      photo: {
+ *        tags: [],
+ *        comments: [],
+ *        _id: "9823745982374598237458",
+ *        uploadedBy: {
+ *          email: "test@test.com",
+ *          firstName: "Tester",
+ *          lastName: "McTest"
+ *        },
+ *        uploadDate: "07/11/2018 11:30 am",
+ *        __v: 0
+ *      }
  *    }
  * @apiErrorExample {json} Error response:
  *    {error: <system error message>, message: 'ERROR: An error occurred with the photo upload process.'}

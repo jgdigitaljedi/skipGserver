@@ -24,7 +24,7 @@ module.exports.profileRead = function (req, res) {
 				logger.logThis(err, req);
 				res.status(500).json({ error: err, message: 'ERROR: Error fetching user profile.' });
 			} else {
-				res.status(200).json({ firstName: user.firstName, lastName: user.lastName, joinDate: user.joinDate, lastUpdated: user.lastUpdated, email: user.email, admin: user.admin });
+				res.status(200).json({ error: false, firstName: user.firstName, lastName: user.lastName, joinDate: user.joinDate, lastUpdated: user.lastUpdated, email: user.email, admin: user.admin });
 			}
 		});
 	}
@@ -52,7 +52,15 @@ module.exports.profileUpdate = function (req, res) {
 					res.status(500).json({ error: err, message: 'ERROR: Error updating user data.' });
 				} else {
 					result.profileUpdated();
-					res.status(200).json(result);
+					res.status(200).json({
+						error: false,
+						firstName: result.firstName,
+						lastName: result.lastName,
+						email: result.email,
+						admin: result.admin,
+						joinDate: result.joinDate,
+						lastUpdated: result.lastUpdated
+					});
 				}
 			}
 		);

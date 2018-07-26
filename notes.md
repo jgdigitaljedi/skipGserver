@@ -33,6 +33,7 @@ brew install exiftool
 ## TODOs ##
 - changes all responses to have {error: true/false, whatever: whatever} format
 - more API tests
+- write unit tests for logic
 - update doc generation blocks
 - update POSTMAN file
 - explore http2 possibility

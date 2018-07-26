@@ -11,12 +11,12 @@ const path = require('path');
  * @param {*} res 
  */
 module.exports.getList = (req, res) => {
-	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
+	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin -joinDate -resetToken -resetTokenExpires -lastUpdated').exec((err, photos) => {
 		if (err) {
 			logger.logThis(err, req);
 			res.status(500).json({ error: err, message: 'ERROR: Error fetching photos list!' });
 		}
-		res.status(200).json(photos);
+		res.status(200).json({ error: false, photos });
 	});
 };
 
