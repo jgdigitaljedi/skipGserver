@@ -8,6 +8,7 @@ const moment = require('moment');
 const bluebird = require('bluebird');
 const archive = require('../config/archive');
 const path = require('path');
+const removeUserDetails = '-_id -salt -hash -admin -email -joinDate -lastUpdated -resetToken -resetTokenExpires';
 
 function deleteFile(file) {
 	return new Promise((resolve, reject) => {
@@ -45,7 +46,7 @@ module.exports.downloadAll = (req, res) => {
 module.exports.getPhotoInfo = (req, res) => {
 	if (req.params.hasOwnProperty('id') && req.params.id) {
 		const id = req.params.id;
-		Photo.findById(id).populate('uploadedBy', '-_id -salt -hash -admin -resetToken -resetTokenExpires').exec((err, photo) => {
+		Photo.findById(id).populate('uploadedBy', removeUserDetails).populate('comments.commenter', removeUserDetails).exec((err, photo) => {
 			if (err) {
 				logger.logThis(err, req);
 				res.status(500).json({ error: err, message: 'ERROR: Error fetching photo info!' });
@@ -67,7 +68,7 @@ module.exports.getPhotoInfo = (req, res) => {
  * @param {*} res 
  */
 module.exports.getPhotoByTag = (req, res) => {
-	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
+	Photo.find({}).populate('uploadedBy', removeUserDetails).populate('comments.commenter', removeUserDetails).exec((err, photos) => {
 		if (err) {
 			logger.logThis(err, req);
 			res.status(500).json({ error: err, message: 'ERROR: Error fetching photos from DB.' });
@@ -104,7 +105,7 @@ module.exports.getPhotoByTag = (req, res) => {
  * @param {*} res 
  */
 module.exports.getPhotoByUploaderId = (req, res) => {
-	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
+	Photo.find({}).populate('uploadedBy', removeUserDetails).populate('comments.commenter', removeUserDetails).exec((err, photos) => {
 		if (err) {
 			logger.logThis(err, req);
 			res.status(500).json({ error: err, message: 'ERROR: Error fetching photos from DB.' });
@@ -132,7 +133,7 @@ module.exports.getPhotoByUploaderId = (req, res) => {
  * @param {*} res 
  */
 module.exports.getPhotoByUploaderName = (req, res) => {
-	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin').exec((err, photos) => {
+	Photo.find({}).populate('uploadedBy', removeUserDetails).populate('comments.commenter', removeUserDetails).exec((err, photos) => {
 		if (err) {
 			logger.logThis(err, req);
 			res.status(500).json({ error: err, message: 'ERROR: Error fetching photos from DB.' });
@@ -230,7 +231,7 @@ module.exports.uploadPhotos = (req, res) => {
 module.exports.deletePhoto = (req, res) => {
 	// must be admin to hit this
 	if (req.payload && req.payload.admin) {
-		Photo.findById(req.params.id, (err, photo) => {
+		Photo.findById(req.params.id).populate('uploadedBy', removeUserDetails).populate('comments.commenter', removeUserDetails).exec((err, photo) => {
 			if (err) {
 				logger.logThis(err, req);
 				res.status(500).json({ error: err, message: 'ERROR: Problem fetching photo for deletion.' });
@@ -287,18 +288,19 @@ module.exports.editTags = (req, res) => {
 				Photo.findOneAndUpdate(
 					{ _id: req.params.id },
 					{ $set: { tags: tags } },
-					{ new: true },
-					(err, photo) => {
-						if (err) {
-							logger.logThis(err, req);
-							res
-								.status(500)
-								.json({ error: err, message: 'ERROR: Problem fetching photo from DB to edit tags.' });
-						} else {
-							res.status(200).json({ error: false, photo });
+					{ new: true })
+					.populate('uploadedBy', removeUserDetails).populate('comments.commenter', removeUserDetails).exec(
+						(err, photo) => {
+							if (err) {
+								logger.logThis(err, req);
+								res
+									.status(500)
+									.json({ error: err, message: 'ERROR: Problem fetching photo from DB to edit tags.' });
+							} else {
+								res.status(200).json({ error: false, photo });
+							}
 						}
-					}
-				);
+					);
 			} catch (e) {
 				logger.logThis(e, req);
 				res.status(500).json({ error: e, message: 'ERROR: Problem with updating tags.' });
@@ -321,7 +323,7 @@ module.exports.editComments = (req, res) => {
 	if (req.params.hasOwnProperty('id') && req.params.id) {
 		if (req.body.comment && req.body.comment.length) {
 			try {
-				Photo.findById(req.params.id, (err, photo) => {
+				Photo.findById(req.params.id).populate('uploadedBy', removeUserDetails).populate('comments.commenter', removeUserDetails).exec((err, photo) => {
 					if (err) {
 						logger.logThis(err, req);
 						res.status(500).json({ error: err, message: 'ERROR: Problem getting photo to add comments.' });

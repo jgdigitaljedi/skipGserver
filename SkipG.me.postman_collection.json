@@ -101,7 +101,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkN2YiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJmaXJzdE5hbWUiOiJUZXN0ZXIiLCJsYXN0TmFtZSI6Ik1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzMyMTI5MjIsImlhdCI6MTUzMjYwODEyMn0.U1TaB_mBIkRAGHj3QcGB295BRGuyjvnCzBasr0BDTBw",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkODAiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJPJ0FkbWluaXN0cmF0b3IiLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTMzMjk3NDgyLCJpYXQiOjE1MzI2OTI2ODJ9.0V2Z7PXJppmtD7TupZh8sLbN1Fr1GQ77808ZeAQeCqs",
 									"type": "string"
 								}
 							]
@@ -155,7 +155,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyOGY3ZjczOWUxMTM4ZTZiNWE4Y2EiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE2OTM1ODcsImlhdCI6MTUzMTA4ODc4N30.h_CA1NEgxC17S3M_nzY71LUBYdYFFY7XHCUDWDxfqTg",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkODAiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJPJ0FkbWluaXN0cmF0b3IiLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTMzMjk3NDgyLCJpYXQiOjE1MzI2OTI2ODJ9.0V2Z7PXJppmtD7TupZh8sLbN1Fr1GQ77808ZeAQeCqs",
 									"type": "string"
 								}
 							]
@@ -195,7 +195,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyOGY3ZjczOWUxMTM4ZTZiNWE4Y2EiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE2OTM1ODcsImlhdCI6MTUzMTA4ODc4N30.h_CA1NEgxC17S3M_nzY71LUBYdYFFY7XHCUDWDxfqTg",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkODAiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJPJ0FkbWluaXN0cmF0b3IiLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTMzMjk3NDgyLCJpYXQiOjE1MzI2OTI2ODJ9.0V2Z7PXJppmtD7TupZh8sLbN1Fr1GQ77808ZeAQeCqs",
 									"type": "string"
 								}
 							]
@@ -209,7 +209,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"uploader\": \"\"\n}"
+							"raw": "{\n\t\"uploader\": \"5b51dca8df47984953ca9d80\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/photos/uploader/id",
@@ -236,7 +236,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyOGY3ZjczOWUxMTM4ZTZiNWE4Y2EiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE2OTM1ODcsImlhdCI6MTUzMTA4ODc4N30.h_CA1NEgxC17S3M_nzY71LUBYdYFFY7XHCUDWDxfqTg",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkODAiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJPJ0FkbWluaXN0cmF0b3IiLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTMzMjk3NDgyLCJpYXQiOjE1MzI2OTI2ODJ9.0V2Z7PXJppmtD7TupZh8sLbN1Fr1GQ77808ZeAQeCqs",
 									"type": "string"
 								}
 							]
@@ -248,7 +248,7 @@
 							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/photos/info/111",
+							"raw": "http://localhost:3000/api/photos/info/5b51dca8df47984953ca9d81",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -258,7 +258,7 @@
 								"api",
 								"photos",
 								"info",
-								"111"
+								"5b51dca8df47984953ca9d81"
 							]
 						}
 					},
@@ -272,7 +272,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQ3NDk0NTYyNjFhMzViMmY5NzQ3YWQiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsIm5hbWUiOiJhZG1pbiIsImFkbWluIjp0cnVlLCJleHAiOjE1MzIwMDMyODcsImlhdCI6MTUzMTM5ODQ4N30.xX4VOvfE-i55Oum7x_vaOUhiftJhOvn7BGb0vnWKrRo",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkODAiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJPJ0FkbWluaXN0cmF0b3IiLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTMzMjk3NDgyLCJpYXQiOjE1MzI2OTI2ODJ9.0V2Z7PXJppmtD7TupZh8sLbN1Fr1GQ77808ZeAQeCqs",
 									"type": "string"
 								}
 							]
@@ -286,10 +286,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"_id\": \"5b474c7c36360f1799282927\"\n}"
+							"raw": ""
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/photos",
+							"raw": "http://localhost:3000/api/photos/5b51dca8df47984953ca9d81",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -297,7 +297,8 @@
 							"port": "3000",
 							"path": [
 								"api",
-								"photos"
+								"photos",
+								"5b51dca8df47984953ca9d81"
 							]
 						}
 					},
@@ -311,7 +312,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQ1ZmRlYjJjNTAxMDBmMzA1MzAzZmUiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzIwMDE5OTMsImlhdCI6MTUzMTM5NzE5M30.R--9OofBo1yPi6H14Z9EFaOdWg2w78gFC05vUcUXa70",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkODAiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJPJ0FkbWluaXN0cmF0b3IiLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTMzMjk3NDgyLCJpYXQiOjE1MzI2OTI2ODJ9.0V2Z7PXJppmtD7TupZh8sLbN1Fr1GQ77808ZeAQeCqs",
 									"type": "string"
 								}
 							]
@@ -325,7 +326,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"uploader\": \"admin\"\n}"
+							"raw": "{\n\t\"uploader\": \"Test\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/photos/uploader/name",
@@ -352,7 +353,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyOGY3ZjczOWUxMTM4ZTZiNWE4Y2EiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE2OTM1ODcsImlhdCI6MTUzMTA4ODc4N30.h_CA1NEgxC17S3M_nzY71LUBYdYFFY7XHCUDWDxfqTg",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkODAiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJPJ0FkbWluaXN0cmF0b3IiLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTMzMjk3NDgyLCJpYXQiOjE1MzI2OTI2ODJ9.0V2Z7PXJppmtD7TupZh8sLbN1Fr1GQ77808ZeAQeCqs",
 									"type": "string"
 								}
 							]
@@ -366,10 +367,10 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"tags\": [\n\t\t\"pool\",\n\t\t\"mere mere\",\n\t\t\"backyard\"\n\t]\n}"
+							"raw": "{\n\t\"tags\": [\n\t\t\"dragon\",\n\t\t\"paladin\"\n\t]\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/photos/tag/11",
+							"raw": "http://localhost:3000/api/photos/tag/5b5b1705f75e49453e387da9",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -379,42 +380,7 @@
 								"api",
 								"photos",
 								"tag",
-								"11"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "downloadAllPhotos",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyOGY3ZjczOWUxMTM4ZTZiNWE4Y2EiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE2OTM1ODcsImlhdCI6MTUzMTA4ODc4N30.h_CA1NEgxC17S3M_nzY71LUBYdYFFY7XHCUDWDxfqTg",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": ""
-						},
-						"url": {
-							"raw": "http://localhost:3000/api/photos/all",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "3000",
-							"path": [
-								"api",
-								"photos",
-								"all"
+								"5b5b1705f75e49453e387da9"
 							]
 						}
 					},
@@ -428,7 +394,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyOGY3ZjczOWUxMTM4ZTZiNWE4Y2EiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE2OTM1ODcsImlhdCI6MTUzMTA4ODc4N30.h_CA1NEgxC17S3M_nzY71LUBYdYFFY7XHCUDWDxfqTg",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkODAiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJPJ0FkbWluaXN0cmF0b3IiLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTMzMjk3NDgyLCJpYXQiOjE1MzI2OTI2ODJ9.0V2Z7PXJppmtD7TupZh8sLbN1Fr1GQ77808ZeAQeCqs",
 									"type": "string"
 								}
 							]
@@ -445,7 +411,7 @@
 							"raw": "{\n\t\"comment\": \"This is a comment. This is a comment on drugs. Any Questions?\"\n}"
 						},
 						"url": {
-							"raw": "http://localhost:3000/api/photos/comment/11",
+							"raw": "http://localhost:3000/api/photos/comment/5b5b1705f75e49453e387da9",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -455,7 +421,7 @@
 								"api",
 								"photos",
 								"comment",
-								"11"
+								"5b5b1705f75e49453e387da9"
 							]
 						}
 					},
@@ -532,7 +498,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjQyOGY3ZjczOWUxMTM4ZTZiNWE4Y2EiLCJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJuYW1lIjoiVGVzdGVyIE1jVGVzdGVyc29uIiwiYWRtaW4iOmZhbHNlLCJleHAiOjE1MzE2OTM1ODcsImlhdCI6MTUzMTA4ODc4N30.h_CA1NEgxC17S3M_nzY71LUBYdYFFY7XHCUDWDxfqTg",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1YjUxZGNhOGRmNDc5ODQ5NTNjYTlkODAiLCJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImZpcnN0TmFtZSI6IkFkbWluIiwibGFzdE5hbWUiOiJPJ0FkbWluaXN0cmF0b3IiLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTMzMjk3NDgyLCJpYXQiOjE1MzI2OTI2ODJ9.0V2Z7PXJppmtD7TupZh8sLbN1Fr1GQ77808ZeAQeCqs",
 									"type": "string"
 								}
 							]
@@ -652,7 +618,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"email\": \"test@test.com\",\n\t\"password\": \"test\"\n}"
+							"raw": "{\n\t\"email\": \"admin@admin.com\",\n\t\"password\": \"admin\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/user/login",
@@ -761,7 +727,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n\t\"newpass\": \"tester\"\n}"
+							"raw": "{\n\t\"email\": \"test@test.com\"\n}"
 						},
 						"url": {
 							"raw": "http://localhost:3000/api/user/reset",

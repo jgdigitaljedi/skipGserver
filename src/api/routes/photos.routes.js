@@ -47,12 +47,9 @@ router.get('/info/:id', ctrlPhotos.getPhotoInfo);
  *        tags: [],
  *        comments: [],
  *        _id: "9823745982374598237458",
- *        uploadedBy: {
- *          email: "test@test.com",
- *          firstName: "Tester",
- *          lastName: "McTest"
- *        },
+ *        uploadedBy: "45654678651324968462",
  *        uploadDate: "07/11/2018 11:30 am",
+ *        fileName: "photo-07-26-2018--07:49:20.jpeg"
  *        __v: 0
  *      }
  *    }
@@ -80,16 +77,27 @@ router.get('/all', ctrlPhotos.downloadAll);
  * @apiDescription Deletes photo file, thumb, and DB entry
  * @apiSuccessExample {json} Success response:
  *    {
+ *    error: false,
+ *    photo: {
+ *      details: {
+ *        exifRemoved: true,
+ *        width: 300,
+ *        height: 315,
+ *        format: "jpeg",
+ *        size: 22642
+ *      },
  *      tags: [],
  *      comments: [],
  *      _id: "9823745982374598237458",
  *      uploadedBy: {
  *        email: "test@test.com",
- *        name: "Tester"
+ *        firstName: "Test",
+ *        lastName: "McText"
  *      },
  *      uploadDate: "07/11/2018 11:30 am",
  *      __v: 0
- *    }
+ *      }
+ *  }
  *  @apiErrorExample {json} Error response:
  *    {error: <system error message>, message: 'ERROR: Problem deleting photo.'}
  */
@@ -104,20 +112,30 @@ router.delete('/:id', ctrlPhotos.deletePhoto);
  *    {tag: "pool"}
  * @apiDescription Gets photos by tag
  * @apiSuccessExample {json} Success response:
- *    [
+ *    {
+ *    error: false,
+ *    photos: [
  *      {
- *        tags: ['pool'],
+ *        details: {
+ *          exifRemoved: true,
+ *          width: 300,
+ *          height: 315,
+ *          format: "jpeg",
+ *          size: 22642
+ *        },
+ *        tags: ["pool"],
  *        comments: [],
  *        _id: "9823745982374598237458",
  *        uploadedBy: {
- *          email: "test@test.com",
- *          name: "Tester"
+ *          firstName: "Test",
+ *          lastName: "McText"
  *        },
  *        uploadDate: "07/11/2018 11:30 am",
  *        __v: 0
- *      }
- *      ...
+ *        }
+ *        ...
  *    ]
+ *  }
  * @apiErrorExample {json} Error response:
  *    {error: <system error message>, message: 'ERROR: Problem parsing photos data.'}
  */
@@ -132,20 +150,30 @@ router.post('/tag', ctrlPhotos.getPhotoByTag);
  *    {id: 9823745982374598237458}
  * @apiDescription Gets photos uploaded by a user using their ID
  * @apiSuccessExample {json} Success response:
- *    [
+ *    {
+ *    error: false,
+ *    photos: [
  *      {
- *        tags: [],
+ *        details: {
+ *          exifRemoved: true,
+ *          width: 300,
+ *          height: 315,
+ *          format: "jpeg",
+ *          size: 22642
+ *        },
+ *        tags: ["pool"],
  *        comments: [],
  *        _id: "9823745982374598237458",
  *        uploadedBy: {
- *          email: "test@test.com",
- *          name: "Tester"
+ *          firstName: "Test",
+ *          lastName: "McText"
  *        },
  *        uploadDate: "07/11/2018 11:30 am",
  *        __v: 0
- *      }
- *      ...
+ *        }
+ *        ...
  *    ]
+ *  }
  * @apiErrorExample {json} Error response:
  *    {error: <system error message>, message: 'ERROR: Problem parsing photos by uploader id.'}
  */
@@ -160,20 +188,30 @@ router.post('/uploader/id', ctrlPhotos.getPhotoByUploaderId);
  *    {name: "Tester"}
  * @apiDescription Gets photos uploaded by a user using their name
  * @apiSuccessExample {json} Success response:
- *    [
+ *    {
+ *    error: false,
+ *    photos: [
  *      {
- *        tags: [],
+ *        details: {
+ *          exifRemoved: true,
+ *          width: 300,
+ *          height: 315,
+ *          format: "jpeg",
+ *          size: 22642
+ *        },
+ *        tags: ["pool"],
  *        comments: [],
  *        _id: "9823745982374598237458",
  *        uploadedBy: {
- *          email: "test@test.com",
- *          name: "Tester"
+ *          firstName: "Test",
+ *          lastName: "McText"
  *        },
  *        uploadDate: "07/11/2018 11:30 am",
  *        __v: 0
- *      }
- *      ...
+ *        }
+ *        ...
  *    ]
+ *  }
  * @apiErrorExample {json} Error response:
  *    {error: <system error message>, message: 'ERROR: Problem parsing photos by uploader name.'}
  */
@@ -190,16 +228,23 @@ router.post('/uploader/name', ctrlPhotos.getPhotoByUploaderName);
  * @apiDescription Sets tags array for a photo
  * @apiSuccessExample {json} Success response:
  *    {
- *      tags: ["pool", "Red Sox"],
- *      comments: [],
- *      _id: "9823745982374598237458",
- *      uploadedBy: {
- *        email: "test@test.com",
- *        name: "Tester"
- *      },
- *      uploadDate: "07/11/2018 11:30 am",
- *      __v: 0
+ *    error: false,
+ *    photo: {
+ *        details: {
+ *          exifRemoved: true,
+ *          width: 300,
+ *          height: 315,
+ *          format: "jpeg",
+ *          size: 22642
+ *        },
+ *        tags: ["pool", "Red Sox"],
+ *        comments: [],
+ *        _id: "9823745982374598237458",
+ *        uploadedBy: "64516354981635498",
+ *        uploadDate: "07/11/2018 11:30 am",
+ *        __v: 0
  *    }
+ *  }
  * @apiErrorExample {json} Error response:
  *    {error: <system error message>, message: 'ERROR: Problem fetching photo from DB to edit tags.'}
  */
@@ -215,16 +260,23 @@ router.patch('/tag/:id', ctrlPhotos.editTags);
  * @apiDescription Gets photos uploaded by a user using their name
  * @apiSuccessExample {json} Success response:
  *    {
- *      tags: [],
- *      comments: [{name: "Tester", content: "This is a comment."}],
- *      _id: "9823745982374598237458",
- *      uploadedBy: {
- *        email: "test@test.com",
- *        name: "Tester"
- *      },
- *      uploadDate: "07/11/2018 11:30 am",
- *      __v: 0
+ *    error: false,
+ *    photo: {
+ *        details: {
+ *          exifRemoved: true,
+ *          width: 300,
+ *          height: 315,
+ *          format: "jpeg",
+ *          size: 22642
+ *        },
+ *        tags: ["pool", "Red Sox"],
+ *        comments: ["This is a comment."],
+ *        _id: "9823745982374598237458",
+ *        uploadedBy: "64516354981635498",
+ *        uploadDate: "07/11/2018 11:30 am",
+ *        __v: 0
  *    }
+ *  }
  * @apiErrorExample {json} Error response:
  *    {error: <system error message>, message: 'ERROR: Problem with saving comment.'}
  */

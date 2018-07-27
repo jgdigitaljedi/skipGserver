@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const Photo = mongoose.model('Photo');
 const common = require('../../../common');
 const path = require('path');
+const removeUserDetails = '-_id -salt -hash -admin -email -joinDate -lastUpdated -resetToken -resetTokenExpires';
 
 /**
  * GET /photospublic
@@ -11,7 +12,7 @@ const path = require('path');
  * @param {*} res 
  */
 module.exports.getList = (req, res) => {
-	Photo.find({}).populate('uploadedBy', '-_id -salt -hash -admin -joinDate -resetToken -resetTokenExpires -lastUpdated').exec((err, photos) => {
+	Photo.find({}).populate('uploadedBy', removeUserDetails).populate('comments.commenter', removeUserDetails).exec((err, photos) => {
 		if (err) {
 			logger.logThis(err, req);
 			res.status(500).json({ error: err, message: 'ERROR: Error fetching photos list!' });
