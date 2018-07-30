@@ -1,19 +1,44 @@
+# version: '2'
+# services:
+#   mongodb:
+#     image: bitnami/mongodb:latest
+#     command: mongod --port 27018
+#     ports:
+#       - '27018:27018'
+#   web:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile
+#     image: node:latest
+#     environment:
+#       - SKIPGSECRET=${SKIPGSECRET}
+#       - SPARKPOST_API_KEY=${SPARKPOST_API_KEY}
+#       - NODE_ENV=${NODE_ENV}
+#       - MYEMAIL=${MYEMAIL}
+#     volumes:
+#       - .:/usr/src/app
+#       - /usr/src/app/node_modules
+#     working_dir: /usr/src/app
+#     command: npm run docker
+#     ports:
+#       - '3000:3000'
+#     links:
+#       - mongodb
 version: "2"
 services:
-  web:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    environment:
-      - SKIPGSECRET=${SKIPGSECRET}
-      - SPARKPOST_API_KEY=${SPARKPOST_API_KEY}
-      - NODE_ENV=${NODE_ENV}
-      - MYEMAIL=${MYEMAIL}
+  app:
+    container_name: skipg
+    restart: always
+    build: .
     ports:
-    - "3000:3000"
-    depends_on:
-    - mongo
+      - "3000:3000"
+    links:
+      - mongo
   mongo:
+    container_name: skipg_db
     image: mongo
+    # command: mongod --port 27018
+    volumes:
+      - ./data:/data/db
     ports:
-    - "27017:27017"
+      - "27017:27017"

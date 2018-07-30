@@ -3,6 +3,7 @@ node_modules/
 src/.DS_Store
 src/api/.DS_Store
 docs/
-logs/
+src/logs/
 public/
 spec/
+seed/

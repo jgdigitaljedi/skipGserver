@@ -9,3 +9,7 @@ src/api/.DS_Store
 # can be generated via npm script
 logs/
 docs/
+
+# docker generated
+src/app
+data/
